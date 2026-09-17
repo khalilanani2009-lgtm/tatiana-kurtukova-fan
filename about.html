@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О Татьяне — Татьяна Куртукова</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        :root {
+            --primary: #d4af37;
+            --bg-dark: #080808;
+            --card-bg: #121212;
+            --text-light: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background: #111111;
+            border-bottom: 1px solid var(--primary);
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 25px;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #ddd;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Главная (الرئيسية)</a>
+        <a href="concerts.html">Концерты (الحفلات)</a>
+        <a href="about.html" class="active">О Татьяне (عن تاتيانا)</a>
+    </nav>
+
+    <div class="container">
+        <h1 data-aos="fade-down">О Творчестве и Биографии</h1>
+
+        <div class="about-card" data-aos="fade-up">
+            <p><span class="highlight">Татьяна Куртукова</span> — российская певица, исполняющая песни в фолк- и народном стиле. Ее творчество объединяет традиции русской культуры и современную музыку.</p>
+            
+            <p>Особую популярность певица получила благодаря хиту <span class="highlight">«Матушка»</span>, который завоевал сердца миллионов слушателей по всей стране и за её пределами.</p>
+            
+            <p>На этом фан-сайте мы собираем актуальную информацию о сольных концертах, выступлениях на фестивалях и главных новостях творческого пути Татьяны.</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 900, once: true });
+    </script>
+</body>
+</html>
