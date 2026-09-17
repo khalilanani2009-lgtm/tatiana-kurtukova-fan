@@ -8,6 +8,7 @@
     <style>
         :root {
             --primary: #d4af37;
+            --primary-glow: rgba(212, 175, 55, 0.5);
             --bg-dark: #080808;
             --card-bg: #121212;
             --text-light: #ffffff;
@@ -19,6 +20,7 @@
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
         /* شريط التنقل العلوي */
@@ -47,33 +49,34 @@
 
         header {
             text-align: center;
-            padding: 40px 20px 20px;
-            background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, rgba(8,8,8,1) 80%);
+            padding: 50px 20px 30px;
+            background: radial-gradient(circle at center, rgba(212,175,55,0.18) 0%, rgba(8,8,8,1) 80%);
         }
 
-        /* صورة حية وتفاعلية تتنفس وتتوهج */
+        /* صورة حية تنبض بالحياة والتوهج */
         .avatar-glow {
             width: 180px;
             height: 180px;
             border-radius: 50%;
             border: 3px solid var(--primary);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
-            animation: pulse 2.5s infinite alternate;
+            box-shadow: 0 0 30px var(--primary-glow);
+            animation: pulse 2.8s infinite alternate ease-in-out;
             object-fit: cover;
             transition: transform 0.4s ease;
         }
 
         .avatar-glow:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 45px rgba(212, 175, 55, 0.9);
+            transform: scale(1.08) rotate(1deg);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.9);
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
-            100% { transform: scale(1.05); box-shadow: 0 0 35px rgba(212, 175, 55, 0.8); }
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            100% { transform: scale(1.06); box-shadow: 0 0 40px rgba(212, 175, 55, 0.8); }
         }
 
-        h1 { color: var(--primary); margin: 15px 0 5px; font-size: 2.2rem; }
+        h1 { color: var(--primary); margin: 15px 0 5px; font-size: 2.3rem; letter-spacing: 1px; }
+        .subtitle { color: #aaa; font-size: 1rem; margin-bottom: 10px; }
 
         .container { max-width: 800px; margin: 0 auto; padding: 20px; }
 
@@ -82,21 +85,51 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 16px;
             padding: 25px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: center;
-            transition: transform 0.3s;
+            transition: transform 0.3s, border-color 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
         .card:hover { transform: translateY(-5px); border-color: var(--primary); }
 
         .section-title { color: var(--primary); font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; }
-        .timer-display { font-size: 1.8rem; font-weight: bold; color: #fff; }
+        .timer-display { font-size: 1.8rem; font-weight: bold; color: #fff; letter-spacing: 2px; }
 
         /* مشغل الصوت */
         audio {
             width: 100%;
-            margin-top: 10px;
+            margin-top: 15px;
             border-radius: 10px;
+            filter: invert(0.9) hue-rotate(180deg);
+        }
+
+        /* أزرار التواصل الاجتماعي */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .social-btn {
+            background: #1a1a1a;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 15px var(--primary);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -109,10 +142,10 @@
     </nav>
 
     <header data-aos="fade-down">
-        <!-- صورة تاتيانا الحقيقية والمتحركة -->
+        <!-- صورة تاتيانا تنبض بالحياة -->
         <img class="avatar-glow" src="https://static.tildacdn.com/tild3662-3863-4433-a339-333534666563/IMG_4562.JPG" alt="Татьяна Куртукова">
         <h1>Татьяна Куртукова</h1>
-        <p style="color: #aaa;">Официальное фан-сообщество</p>
+        <div class="subtitle">Официальное фан-сообщество</div>
     </header>
 
     <div class="container">
@@ -122,20 +155,34 @@
             <div class="timer-display" id="timer">Загрузка...</div>
         </div>
 
-        <!-- مشغل الموسيقى -->
+        <!-- مشغل الموسيقى المحسن -->
         <div class="card" data-aos="fade-up" data-aos-delay="100">
-            <div class="section-title">🎶 Музыкальный Плеер</div>
-            <p style="color: #ccc; font-size: 0.95rem;">Слушайте главный хит «Матушка» прямо на сайте:</p>
-            <audio controls>
-                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            <div class="section-title">🎶 Главный хит «Матушка»</div>
+            <p style="color: #ccc; font-size: 0.95rem;">Нажмите кнопку воспроизведения для прослушивания:</p>
+            <audio controls preload="metadata">
+                <source src="https://cdns-preview-d.dzcdn.net/stream/c-d830b8058db3ea5e982ca0e6f77242d5-3.mp3" type="audio/mpeg">
                 Ваш браузер не поддерживает аудиоплеер.
             </audio>
+        </div>
+
+        <!-- وسائل التواصل الاجتماعي الخاصه بحساب الفان باج -->
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <div class="section-title">🌐 Связаться с нами & Сообщество</div>
+            <p style="color: #ddd; font-size: 0.95rem;">Присоединяйтесь к нашим фан-страницам в социальных сетях:</p>
+            <div class="social-links">
+                <!-- استبدل # بروابط حساباتك -->
+                <a href="#" target="_blank" class="social-btn">ВКонтакте (VK)</a>
+                <a href="#" target="_blank" class="social-btn">Telegram Channel</a>
+                <a href="#" target="_blank" class="social-btn">Instagram / TikTok</a>
+            </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 900, once: true });
+
+        // العداد التنازلي لحفلة ياروسلافل (8 октября 2026)
         var countDownDate = new Date("Oct 8, 2026 19:00:00").getTime();
         var x = setInterval(function() {
             var now = new Date().getTime();
