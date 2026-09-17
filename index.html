@@ -29,14 +29,14 @@
             position: relative;
         }
 
-        /* خلفية سينمائية متحركة مع صورة تاتيانا */
+        /* خلفية سينمائية متحركة */
         .bg-hero {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(to bottom, rgba(8,8,8,0.7), rgba(8,8,8,0.95)),
+            background: linear-gradient(to bottom, rgba(8,8,8,0.75), rgba(8,8,8,0.95)),
                         url('https://static.tildacdn.com/tild3662-3863-4433-a339-333534666563/IMG_4562.JPG') center/cover no-repeat;
             z-index: -2;
             animation: zoomBg 20s infinite alternate ease-in-out;
@@ -47,7 +47,6 @@
             100% { transform: scale(1.08); }
         }
 
-        /* إضاءة توهج خلفية */
         .glow-overlay {
             position: fixed;
             top: 0;
@@ -114,7 +113,7 @@
             transform: scale(1.1);
         }
 
-        /* شريط التمرير الأخبار المتحرك */
+        /* شريط الأخبار المتحرك */
         .news-ticker {
             background: rgba(212, 175, 55, 0.15);
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
@@ -138,7 +137,7 @@
 
         header {
             text-align: center;
-            padding: 50px 20px 30px;
+            padding: 40px 20px 20px;
         }
 
         .avatar-glow {
@@ -178,7 +177,7 @@
         }
 
         .container {
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -196,7 +195,7 @@
         }
 
         .card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-5px);
             border-color: var(--primary);
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
         }
@@ -205,7 +204,7 @@
             color: var(--primary);
             font-size: 1.4rem;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -220,12 +219,64 @@
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
 
-        /* شبكة الأغاني */
+        /* معرض الصور المصغر */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin-top: 15px;
+        }
+
+        .photo-card {
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            height: 280px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: all 0.4s ease;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: translateY(-4px);
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .btn-ticket {
+            display: inline-block;
+            background: linear-gradient(45deg, #d4af37, #aa820a);
+            color: #000;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ticket:hover {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.9);
+            transform: scale(1.05);
+        }
+
+        /* شبكة الأغاني الشهيرة */
         .hits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .hit-item {
@@ -247,38 +298,13 @@
             color: var(--primary);
             margin-bottom: 8px;
         }
-
-        .btn-ticket {
-            display: inline-block;
-            background: linear-gradient(45deg, #d4af37, #aa820a);
-            color: #000;
-            padding: 12px 28px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-ticket:hover {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.9);
-            transform: scale(1.05);
-        }
-
-        audio {
-            width: 100%;
-            margin-top: 15px;
-            border-radius: 10px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- الخلفية المتحركة -->
     <div class="bg-hero"></div>
     <div class="glow-overlay"></div>
 
-    <!-- شريط التنقل -->
     <nav>
         <div class="nav-links">
             <a href="index.html" class="active">Главная</a>
@@ -296,14 +322,12 @@
         </div>
     </nav>
 
-    <!-- شريط الأخبار المتحرك -->
     <div class="news-ticker">
         <div class="news-ticker-content">
-            ✨ Добро пожаловать на официальный фан-сайт Татьяны Куртуковой! &nbsp;&nbsp;&nbsp; 📅 Сольные концерты: Ярославль (8 октября) | Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже на тур «Матушка-Земля»!
+            ✨ Добро пожаловать на фан-сайт Татьяны Куртуковой! &nbsp;&nbsp;&nbsp; 📅 Сольные концерты: Ярославль (8 октября) | Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже на тур «Матушка-Земля»!
         </div>
     </div>
 
-    <!-- الهيدر والصورة الرئيسية -->
     <header data-aos="fade-down">
         <img class="avatar-glow" src="https://static.tildacdn.com/tild3662-3863-4433-a339-333534666563/IMG_4562.JPG" alt="Татьяна Куртукова">
         <h1>Татьяна Куртукова</h1>
@@ -313,28 +337,34 @@
     <div class="container">
         <!-- العداد التنازلي -->
         <div class="card" data-aos="fade-up">
-            <div class="section-title"><i class="fas fa-hourglass-half"></i> До ближайшего сольного концерта (Ярославль):</div>
+            <div class="section-title"><i class="fas fa-hourglass-half"></i> До сольного концерта в Ярославле (8 октября):</div>
             <div class="timer-display" id="timer">Загрузка...</div>
             <a href="concerts.html" class="btn-ticket">Купить билет на концерт</a>
         </div>
 
-        <!-- مشغل الصوت الرئيسي -->
+        <!-- معرض الصور المضاف -->
         <div class="card" data-aos="fade-up" data-aos-delay="100">
-            <div class="section-title"><i class="fas fa-music"></i> Главный хит «Матушка»</div>
-            <p style="color: #ccc; font-size: 0.95rem;">Слушайте официальный трек прямо здесь:</p>
-            <audio controls preload="auto">
-                <source src="https://mp3zen.net/files/songs/Tatiana_Kurtukova_-_Matushka.mp3" type="audio/mpeg">
-                Ваш браузер не поддерживает аудиоплеер.
-            </audio>
+            <div class="section-title"><i class="fas fa-camera"></i> Галерея Татьяны</div>
+            <div class="photo-gallery">
+                <div class="photo-card">
+                    <img src="https://static.tildacdn.com/tild3662-3863-4433-a339-333534666563/IMG_4562.JPG" alt="Татьяна Куртукова">
+                </div>
+                <div class="photo-card">
+                    <img src="https://static.tildacdn.com/tild6135-3730-4965-b738-346665653164/IMG_4560.JPG" alt="Татьяна Куртукова Концерт">
+                </div>
+                <div class="photo-card">
+                    <img src="https://static.tildacdn.com/tild3261-3437-4137-b962-636437643734/IMG_4561.JPG" alt="Татьяна Куртукова Матушка">
+                </div>
+            </div>
         </div>
 
-        <!-- شبكة الأعمال والتألق -->
+        <!-- شبكة الأغاني الشهيرة -->
         <div class="card" data-aos="fade-up" data-aos-delay="200">
-            <div class="section-title"><i class="fas fa-star"></i> Хиты и Любимые Песни</div>
+            <div class="section-title"><i class="fas fa-star"></i> Главные Хиты</div>
             <div class="hits-grid">
                 <div class="hit-item">
                     <div class="hit-title">«Матушка»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Главная визитная карточка</p>
+                    <p style="font-size: 0.85rem; color: #bbb;">Главный хит страны</p>
                 </div>
                 <div class="hit-item">
                     <div class="hit-title">«Ромашка-Ромашка»</div>
