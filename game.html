@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра — Татьяна Куртукова</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #d4af37;
+            --primary-glow: rgba(212, 175, 55, 0.6);
+            --bg-dark: #080808;
+            --card-bg: rgba(18, 18, 18, 0.9);
+            --text-light: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .bg-hero {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, rgba(8,8,8,0.85), rgba(8,8,8,0.95)),
+                        url('profile.jpg') center/cover no-repeat;
+            z-index: -2;
+        }
+
+        nav {
+            background: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary);
+            padding: 12px 25px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .menu-toggle-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 1.4rem;
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle-btn:hover {
+            background: var(--primary); color: #000;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .sidebar {
+            position: fixed; top: 0; left: -280px;
+            width: 280px; height: 100%;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--primary);
+            z-index: 2000;
+            transition: left 0.4s ease;
+            padding: 25px 20px;
+            display: flex; flex-direction: column;
+        }
+
+        .sidebar.open { left: 0; }
+
+        .sidebar-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 15px; margin-bottom: 25px;
+        }
+
+        .sidebar-title { color: var(--primary); font-size: 1.2rem; font-weight: bold; }
+        .close-btn { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+
+        .sidebar-links { display: flex; flex-direction: column; gap: 15px; }
+
+        .sidebar-links a {
+            color: #fff; text-decoration: none; font-size: 1.1rem; font-weight: bold;
+            padding: 12px 15px; border-radius: 10px; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .sidebar-links a:hover, .sidebar-links a.active {
+            background: rgba(212, 175, 55, 0.15); color: var(--primary);
+        }
+
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(3px);
+            z-index: 1500; display: none;
+        }
+
+        .overlay-bg.show { display: block; }
+
+        .header-socials { display: flex; gap: 12px; }
+
+        .social-icon-btn {
+            color: #ffffff; font-size: 1.2rem; width: 38px; height: 38px;
+            border-radius: 50%; border: 1px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.3s ease; background: rgba(0,0,0,0.5);
+        }
+
+        .social-icon-btn:hover {
+            background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary);
+        }
+
+        .container { max-width: 750px; margin: 0 auto; padding: 30px 20px; }
+
+        .page-title {
+            text-align: center; color: var(--primary); font-size: 2.2rem; margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            text-align: center; color: #ddd; margin-bottom: 30px; font-size: 1rem;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .result-box {
+            text-align: center;
+            display: none;
+        }
+
+        .score-num {
+            font-size: 3rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .btn-restart {
+            background: linear-gradient(45deg, #d4af37, #aa820a);
+            color: #000;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .btn-restart:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hero"></div>
+    <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- القائمة الجانبية -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Меню навигации</span>
+            <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-links">
+            <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+            <a href="concerts.html"><i class="fas fa-ticket-alt"></i> Концерты</a>
+            <a href="about.html"><i class="fas fa-user-star"></i> О Татьяне</a>
+            <a href="game.html" class="active"><i class="fas fa-gamepad"></i> Викторина</a>
+        </div>
+    </aside>
+
+    <nav>
+        <button class="menu-toggle-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        <div class="header-socials">
+            <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title" data-aos="fade-down"><i class="fas fa-gamepad"></i> Викторина</h1>
+        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Проверьте свои знания о Татьяне Куртуковой!</p>
+
+        <div class="quiz-card" data-aos="fade-up">
+            <div id="quizContainer">
+                <div class="question-text" id="questionText">Загрузка...</div>
+                <div class="options-grid" id="optionsGrid"></div>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <h2>Результат викторины</h2>
+                <div class="score-num" id="scoreDisplay">0 / 0</div>
+                <p id="resultComment" style="color: #ccc; font-size: 1.1rem;"></p>
+                <button class="btn-restart" onclick="restartQuiz()"><i class="fas fa-redo"></i> Пройти снова</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 900, once: true });
+
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('show');
+        }
+
+        // الأسئلة والخيارات
+        const questions = [
+            {
+                question: "Как называется один из самых известных хитов Татьяны Куртуковой?",
+                options: ["Матушка", "Катюша", "Волга", "Соловей"],
+                correct: 0
+            },
+            {
+                question: "Как называется масштабный гастрольный тур Татьяны?",
+                options: ["Русская душа", "Матушка-Земля", "Золотое кольцо", "Песни России"],
+                correct: 1
+            },
+            {
+                question: "В каком городе состоится концерт 8 октября 2026 года?",
+                options: ["Иваново", "Самара", "Ярославль", "Краснодар"],
+                correct: 2
+            },
+            {
+                question: "В каком жанре преимущественно исполняет песни Татьяна?",
+                options: ["Рок", "Народная / Фолк-поп музыка", "Джаз", "Электронная музыка"],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('questionText').innerText = `${currentQuestion + 1}. ${q.question}`;
+            const grid = document.getElementById('optionsGrid');
+            grid.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(idx);
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectOption(idx) {
+            if (idx === questions[currentQuestion].correct) {
+                score++;
+            }
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quizContainer').style.display = 'none';
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('scoreDisplay').innerText = `${score} / ${questions.length}`;
+
+            let comment = "";
+            if (score === questions.length) {
+                comment = "Вы настоящий преданный поклонник Татьяны Куртуковой! 🌟";
+            } else if (score >= questions.length / 2) {
+                comment = "Отличный результат! Вы отлично знаете творчество Татьяны! 🎵";
+            } else {
+                comment = "Хорошая попытка! Попробуйте еще раз, чтобы узнать больше! ✨";
+            }
+            document.getElementById('resultComment').innerText = comment;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('resultBox').style.display = 'none';
+            loadQuestion();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
