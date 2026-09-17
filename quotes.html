@@ -45,6 +45,18 @@
             z-index: -1; pointer-events: none;
         }
 
+        /* شريط الأخبار المتحرك */
+        .news-ticker {
+            background: rgba(212, 175, 55, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--primary); padding: 8px 0; overflow: hidden;
+            white-space: nowrap; font-size: 0.9rem; font-weight: bold;
+        }
+
+        .news-ticker-content { display: inline-block; animation: ticker 25s linear infinite; }
+
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
         /* شريط التنقل العلوي والقائمة الجانبية */
         nav {
             background: rgba(17, 17, 17, 0.9);
@@ -224,7 +236,7 @@
     <div class="glow-overlay"></div>
     <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
 
-    <!-- القائمة الجانبية -->
+    <!-- القائمة الجانبية المحدثة والمتكاملة -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="sidebar-title">Меню навигации</span>
@@ -235,6 +247,7 @@
             <a href="concerts.html"><i class="fas fa-ticket-alt"></i> Концерты</a>
             <a href="about.html"><i class="fas fa-user-star"></i> О Татьяне</a>
             <a href="quotes.html" class="active"><i class="fas fa-quote-right"></i> Цитаты</a>
+            <a href="gallery.html"><i class="fas fa-images"></i> Галерея</a>
             <a href="game.html"><i class="fas fa-gamepad"></i> Игры (Мини-игра)</a>
         </div>
     </aside>
@@ -246,6 +259,13 @@
             <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
         </div>
     </nav>
+
+    <!-- شريط الأخبار المتحرك -->
+    <div class="news-ticker">
+        <div class="news-ticker-content">
+            ✨ Цитаты и мудрость Татьяны Куртуковой &nbsp;&nbsp;&nbsp; 📅 Сольные концерты: Ярославль (8 октября) | Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже!
+        </div>
+    </div>
 
     <div class="container">
         <h1 class="page-title" data-aos="fade-down">Вдохновение и Мудрость</h1>
