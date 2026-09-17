@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Татьяна Куртукова — Независимый фан-сайт</title>
+    <title>Татьяна Куртукова — Главная</title>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
         :root {
@@ -21,7 +21,7 @@
             padding: 0;
         }
 
-        /* شريط التنقل العلوي بين الصفحات */
+        /* شريط التنقل العلوي */
         nav {
             background: #111111;
             border-bottom: 1px solid var(--primary);
@@ -48,25 +48,32 @@
         header {
             text-align: center;
             padding: 40px 20px 20px;
-            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(8,8,8,1) 80%);
+            background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, rgba(8,8,8,1) 80%);
         }
 
+        /* صورة حية وتفاعلية تتنفس وتتوهج */
         .avatar-glow {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             border: 3px solid var(--primary);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
-            animation: pulse 3s infinite alternate;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+            animation: pulse 2.5s infinite alternate;
             object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .avatar-glow:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 45px rgba(212, 175, 55, 0.9);
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+            100% { transform: scale(1.05); box-shadow: 0 0 35px rgba(212, 175, 55, 0.8); }
         }
 
-        h1 { color: var(--primary); margin: 15px 0 5px; }
+        h1 { color: var(--primary); margin: 15px 0 5px; font-size: 2.2rem; }
 
         .container { max-width: 800px; margin: 0 auto; padding: 20px; }
 
@@ -77,25 +84,35 @@
             padding: 25px;
             margin-bottom: 20px;
             text-align: center;
+            transition: transform 0.3s;
         }
 
-        .section-title { color: var(--primary); font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
-        .timer-display { font-size: 1.6rem; font-weight: bold; color: #fff; }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+        .section-title { color: var(--primary); font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; }
+        .timer-display { font-size: 1.8rem; font-weight: bold; color: #fff; }
+
+        /* مشغل الصوت */
+        audio {
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- القائمة العلوية للتنقل بين الصفحات -->
     <nav>
-        <a href="index.html" class="active">Главная (الرئيسية)</a>
-        <a href="concerts.html">Концерты (الحفلات)</a>
-        <a href="about.html">О Татьяне (عن تاتيانا)</a>
+        <a href="index.html" class="active">Главная</a>
+        <a href="concerts.html">Концерты</a>
+        <a href="about.html">О Татьяне</a>
     </nav>
 
     <header data-aos="fade-down">
-        <img class="avatar-glow" src="https://avatars.mds.yandex.net/get-kinopoisk-image/10809116/8277be5b-c2e7-40ab-b7b5-fbfeefd5ca44/280x420" alt="Татьяна Куртукова">
+        <!-- صورة تاتيانا الحقيقية والمتحركة -->
+        <img class="avatar-glow" src="https://static.tildacdn.com/tild3662-3863-4433-a339-333534666563/IMG_4562.JPG" alt="Татьяна Куртукова">
         <h1>Татьяна Куртукова</h1>
-        <p style="color: #aaa;">Независимый фан-сайт</p>
+        <p style="color: #aaa;">Официальное фан-сообщество</p>
     </header>
 
     <div class="container">
@@ -103,6 +120,16 @@
         <div class="card" data-aos="fade-up">
             <div class="section-title">⏳ До сольного концерта в Ярославле (8 октября):</div>
             <div class="timer-display" id="timer">Загрузка...</div>
+        </div>
+
+        <!-- مشغل الموسيقى -->
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+            <div class="section-title">🎶 Музыкальный Плеер</div>
+            <p style="color: #ccc; font-size: 0.95rem;">Слушайте главный хит «Матушка» прямо на сайте:</p>
+            <audio controls>
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                Ваш браузер не поддерживает аудиоплеер.
+            </audio>
         </div>
     </div>
 
