@@ -37,7 +37,7 @@
             width: 100vw;
             height: 100vh;
             background: linear-gradient(to bottom, rgba(8,8,8,0.75), rgba(8,8,8,0.95)),
-                        url('https://static.tildacdn.com/tild3662-3863-4433-a339-333534666563/IMG_4562.JPG') center/cover no-repeat;
+                        url('profile.jpg') center/cover no-repeat;
             z-index: -2;
             animation: zoomBg 20s infinite alternate ease-in-out;
         }
@@ -140,20 +140,22 @@
             padding: 40px 20px 20px;
         }
 
+        /* الصورة الدائرية المتوهجة */
         .avatar-glow {
-            width: 190px;
-            height: 190px;
+            width: 170px;
+            height: 170px;
             border-radius: 50%;
             border: 3px solid var(--primary);
-            box-shadow: 0 0 35px var(--primary-glow);
+            box-shadow: 0 0 30px var(--primary-glow);
             animation: pulse 3s infinite alternate ease-in-out;
             object-fit: cover;
             transition: transform 0.4s ease;
+            margin-bottom: 15px;
         }
 
         .avatar-glow:hover {
-            transform: scale(1.08) rotate(1deg);
-            box-shadow: 0 0 55px rgba(212, 175, 55, 0.9);
+            transform: scale(1.08);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.9);
         }
 
         @keyframes pulse {
@@ -163,7 +165,7 @@
 
         h1 {
             color: var(--primary);
-            margin: 20px 0 5px;
+            margin: 10px 0 5px;
             font-size: 2.6rem;
             letter-spacing: 2px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.8);
@@ -219,88 +221,6 @@
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
 
-        /* معرض الصور المتحرك تلقائياً */
-        .slideshow-container {
-            position: relative;
-            max-width: 100%;
-            height: 420px;
-            margin: auto;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
-        }
-
-        .mySlides {
-            display: none;
-            height: 100%;
-            width: 100%;
-        }
-
-        .mySlides img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
-        }
-
-        .fade {
-            animation-name: fade;
-            animation-duration: 1.2s;
-        }
-
-        @keyframes fade {
-            from { opacity: 0.4; transform: scale(1.03); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 12px 18px;
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.3s ease;
-            border-radius: 50%;
-            user-select: none;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--primary);
-        }
-
-        .next { right: 15px; }
-        .prev { left: 15px; }
-
-        .prev:hover, .next:hover {
-            background-color: var(--primary);
-            color: #000;
-            box-shadow: 0 0 15px var(--primary);
-        }
-
-        .dots-container {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .dot {
-            cursor: pointer;
-            height: 10px;
-            width: 10px;
-            margin: 0 4px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.4s ease, transform 0.4s ease;
-        }
-
-        .dot.active, .dot:hover {
-            background-color: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-            transform: scale(1.3);
-        }
-
         .btn-ticket {
             display: inline-block;
             background: linear-gradient(45deg, #d4af37, #aa820a);
@@ -316,33 +236,6 @@
         .btn-ticket:hover {
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.9);
             transform: scale(1.05);
-        }
-
-        .hits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .hit-item {
-            background: rgba(30, 30, 30, 0.8);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .hit-item:hover {
-            border-color: var(--primary);
-            transform: scale(1.03);
-        }
-
-        .hit-title {
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
         }
     </style>
 </head>
@@ -374,8 +267,10 @@
         </div>
     </div>
 
+    <!-- الهيدر والصورة الدائرية المتوهجة -->
     <header data-aos="fade-down">
-        <img class="avatar-glow" src="https://static.tildacdn.com/tild3662-3863-4433-a339-333534666563/IMG_4562.JPG" alt="Татьяна Куртукова">
+        <!-- هنا مكان الصورة الدائرية: تأكد أن اسمها profile.jpg -->
+        <img class="avatar-glow" src="profile.jpg" alt="Татьяна Куртукова">
         <h1>Татьяна Куртукова</h1>
         <div class="subtitle">Фан-сообщество & Творчество</div>
     </header>
@@ -387,61 +282,12 @@
             <div class="timer-display" id="timer">Загрузка...</div>
             <a href="concerts.html" class="btn-ticket">Купить билет на концерт</a>
         </div>
-
-        <!-- معرض الصور المتحرك تلقائياً -->
-        <div class="card" data-aos="fade-up" data-aos-delay="100">
-            <div class="section-title"><i class="fas fa-images"></i> Галерея Татьяны</div>
-            
-            <div class="slideshow-container">
-                <!-- هنا تضع أسماء أو روابط الصور -->
-                <div class="mySlides fade">
-                    <img src="photo1.jpg" alt="Татьяна Куртукова">
-                </div>
-                <div class="mySlides fade">
-                    <img src="photo2.jpg" alt="Татьяна Куртукова">
-                </div>
-                <div class="mySlides fade">
-                    <img src="photo3.jpg" alt="Татьяна Куртукова">
-                </div>
-
-                <!-- أزرار التنقل -->
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            </div>
-
-            <!-- نقاط المؤشر -->
-            <div class="dots-container">
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
-            </div>
-        </div>
-
-        <!-- شبكة الأغاني الشهيرة -->
-        <div class="card" data-aos="fade-up" data-aos-delay="200">
-            <div class="section-title"><i class="fas fa-star"></i> Главные Хиты</div>
-            <div class="hits-grid">
-                <div class="hit-item">
-                    <div class="hit-title">«Матушка»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Главный хит страны</p>
-                </div>
-                <div class="hit-item">
-                    <div class="hit-title">«Ромашка-Ромашка»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Душевный фолк-хит</p>
-                </div>
-                <div class="hit-item">
-                    <div class="hit-title">«Русская зима»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Невероятная атмосфера</p>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 900, once: true });
 
-        // العداد التنازلي
         var countDownDate = new Date("Oct 8, 2026 19:00:00").getTime();
         var x = setInterval(function() {
             var now = new Date().getTime();
@@ -452,56 +298,6 @@
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
             document.getElementById("timer").innerHTML = days + "д " + hours + "ч " + minutes + "м " + seconds + "с";
         }, 1000);
-
-        // برمجة سلايدر الصور المتحرك تلقائياً
-        let slideIndex = 0;
-        let slideTimer;
-
-        showSlidesAuto();
-
-        function showSlidesAuto() {
-            let slides = document.getElementsByClassName("mySlides");
-            let dots = document.getElementsByClassName("dot");
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            slideIndex++;
-            if (slideIndex > slides.length) {slideIndex = 1}    
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            if(slides[slideIndex-1]) {
-                slides[slideIndex-1].style.display = "block";  
-                dots[slideIndex-1].className += " active";
-            }
-            slideTimer = setTimeout(showSlidesAuto, 3500); // تغيير الصورة كل 3.5 ثوانٍ
-        }
-
-        function plusSlides(n) {
-            clearTimeout(slideTimer);
-            showSlideManual(slideIndex += n);
-        }
-
-        function currentSlide(n) {
-            clearTimeout(slideTimer);
-            showSlideManual(slideIndex = n);
-        }
-
-        function showSlideManual(n) {
-            let slides = document.getElementsByClassName("mySlides");
-            let dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex-1].style.display = "block";  
-            dots[slideIndex-1].className += " active";
-            slideTimer = setTimeout(showSlidesAuto, 3500);
-        }
     </script>
 </body>
 </html>
