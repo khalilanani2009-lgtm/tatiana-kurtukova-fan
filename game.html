@@ -13,6 +13,7 @@
             --bg-dark: #080808;
             --card-bg: rgba(18, 18, 18, 0.9);
             --text-light: #ffffff;
+            --accent-gold: #f3e5ab;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,19 +23,42 @@
             color: var(--text-light);
             font-family: 'Segoe UI', Arial, sans-serif;
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .bg-hero {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(to bottom, rgba(8,8,8,0.85), rgba(8,8,8,0.95)),
+            background: linear-gradient(to bottom, rgba(8,8,8,0.7), rgba(8,8,8,0.95)),
                         url('profile.jpg') center/cover no-repeat;
             z-index: -2;
+            animation: zoomBg 25s infinite alternate ease-in-out;
         }
+
+        @keyframes zoomBg { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+
+        .glow-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15), transparent 75%);
+            z-index: -1; pointer-events: none;
+        }
+
+        /* شريط الأخبار المتحرك */
+        .news-ticker {
+            background: rgba(212, 175, 55, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--primary); padding: 8px 0; overflow: hidden;
+            white-space: nowrap; font-size: 0.9rem; font-weight: bold;
+        }
+        .news-ticker-content { display: inline-block; animation: ticker 25s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         nav {
             background: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--primary);
             padding: 12px 25px;
             display: flex; justify-content: space-between; align-items: center;
@@ -63,6 +87,7 @@
             width: 280px; height: 100%;
             background: rgba(15, 15, 15, 0.98);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-right: 1px solid var(--primary);
             z-index: 2000;
             transition: left 0.4s ease;
@@ -96,6 +121,7 @@
         .overlay-bg {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
             z-index: 1500; display: none;
         }
 
@@ -114,14 +140,29 @@
             background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary);
         }
 
-        .container { max-width: 750px; margin: 0 auto; padding: 30px 20px; }
+        .container { max-width: 750px; margin: 0 auto; padding: 30px 20px; flex: 1; width: 100%; }
 
         .page-title {
             text-align: center; color: var(--primary); font-size: 2.2rem; margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
         .page-subtitle {
-            text-align: center; color: #ddd; margin-bottom: 30px; font-size: 1rem;
+            text-align: center; color: #ddd; margin-bottom: 25px; font-size: 1rem;
+        }
+
+        /* شريط معلومات اللعبة (العداد والنقاط فوق) */
+        .quiz-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 1.05rem;
         }
 
         .quiz-card {
@@ -129,16 +170,17 @@
             border: 1px solid rgba(212, 175, 55, 0.35);
             border-radius: 20px;
             padding: 30px;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .question-text {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: bold;
             margin-bottom: 20px;
             color: #fff;
             text-align: center;
+            line-height: 1.5;
         }
 
         .options-grid {
@@ -159,11 +201,37 @@
             text-align: left;
         }
 
-        .option-btn:hover {
+        .option-btn:hover:not(:disabled) {
             background: rgba(212, 175, 55, 0.2);
             border-color: var(--primary);
             transform: translateX(5px);
         }
+
+        /* مربع التعليق التحفيزي أو المضحك بعد الإجابة */
+        .feedback-box {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .feedback-box.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .feedback-box.wrong {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
         .result-box {
             text-align: center;
@@ -175,30 +243,38 @@
             color: var(--primary);
             font-weight: bold;
             margin: 15px 0;
+            text-shadow: 0 0 15px var(--primary-glow);
         }
 
         .btn-restart {
-            background: linear-gradient(45deg, #d4af37, #aa820a);
-            color: #000;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
             padding: 12px 28px;
-            border: none;
             border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
             font-size: 1rem;
             margin-top: 20px;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
 
-        .btn-restart:hover { transform: scale(1.05); }
+        .btn-restart:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
 
     <div class="bg-hero"></div>
+    <div class="glow-overlay"></div>
     <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
 
-    <!-- القائمة الجانبية -->
+    <!-- القائمة الجانبية المتكاملة -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="sidebar-title">Меню навигации</span>
@@ -208,32 +284,48 @@
             <a href="index.html"><i class="fas fa-home"></i> Главная</a>
             <a href="concerts.html"><i class="fas fa-ticket-alt"></i> Концерты</a>
             <a href="about.html"><i class="fas fa-user-star"></i> О Татьяне</a>
-            <a href="game.html" class="active"><i class="fas fa-gamepad"></i> Викторина</a>
+            <a href="quotes.html"><i class="fas fa-quote-right"></i> Цитаты</a>
+            <a href="gallery.html"><i class="fas fa-images"></i> Галерея</a>
+            <a href="game.html" class="active"><i class="fas fa-gamepad"></i> Игры (Мини-игра)</a>
         </div>
     </aside>
 
     <nav>
         <button class="menu-toggle-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
         <div class="header-socials">
-            <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
         </div>
     </nav>
 
+    <!-- شريط الأخبار المتحرك -->
+    <div class="news-ticker">
+        <div class="news-ticker-content">
+            ✨ Проверь себя в викторине о Татьяне Куртуковой &nbsp;&nbsp;&nbsp; 📅 Концерты в Ярославле (8 октября) и Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже!
+        </div>
+    </div>
+
     <div class="container">
         <h1 class="page-title" data-aos="fade-down"><i class="fas fa-gamepad"></i> Викторина</h1>
-        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Проверьте свои знания о Татьяне Куртуковой!</p>
+        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Насколько хорошо вы знаете творчество и факты о Татьяне?</p>
 
         <div class="quiz-card" data-aos="fade-up">
+            <!-- شريط معلومات العداد والنقاط في الأعلى -->
+            <div class="quiz-stats" id="quizStats">
+                <span id="questionCounter">Вопрос: 1 / 8</span>
+                <span id="currentScore">Очки: 0</span>
+            </div>
+
             <div id="quizContainer">
                 <div class="question-text" id="questionText">Загрузка...</div>
                 <div class="options-grid" id="optionsGrid"></div>
+                <div class="feedback-box" id="feedbackBox"></div>
             </div>
 
             <div class="result-box" id="resultBox">
                 <h2>Результат викторины</h2>
-                <div class="score-num" id="scoreDisplay">0 / 0</div>
-                <p id="resultComment" style="color: #ccc; font-size: 1.1rem;"></p>
+                <div class="score-num" id="scoreDisplay">0 / 8</div>
+                <p id="resultComment" style="color: #ccc; font-size: 1.1rem; margin-bottom: 20px;"></p>
                 <button class="btn-restart" onclick="restartQuiz()"><i class="fas fa-redo"></i> Пройти снова</button>
             </div>
         </div>
@@ -248,61 +340,138 @@
             document.getElementById('overlay').classList.toggle('show');
         }
 
-        // الأسئلة والخيارات
+        // بنك الأسئلة الموسع عن تاتيانا كورتوكوفا
         const questions = [
             {
-                question: "Как называется один из самых известных хитов Татьяны Куртуковой?",
+                question: "Как называется один из самых известных всенародных хитов Татьяны Куртуковой?",
                 options: ["Матушка", "Катюша", "Волга", "Соловей"],
-                correct: 0
+                correct: 0,
+                correctComment: "Браво! Верно! Эта песня звучит в каждом сердце! 🌟",
+                wrongComment: "Ой-ой! Не угадали, это же легендарная «Матушка»! 😉"
             },
             {
                 question: "Как называется масштабный гастрольный тур Татьяны?",
                 options: ["Русская душа", "Матушка-Земля", "Золотое кольцо", "Песни России"],
-                correct: 1
+                correct: 1,
+                correctComment: "Отлично! Тур «Матушка-Земля» покоряет всю страну! 🌍",
+                wrongComment: "Мимо! Правильный ответ: «Матушка-Земля». Попробуем следующий!"
             },
             {
-                question: "В каком городе состоится концерт 8 октября 2026 года?",
+                question: "В каком российском городе запланирован сольный концерт Татьяны 8 октября 2026 года?",
                 options: ["Иваново", "Самара", "Ярославль", "Краснодар"],
-                correct: 2
+                correct: 2,
+                correctComment: "Великолепно! Ярославль ждет этот потрясающий вечер! 🎤",
+                wrongComment: "Не совсем! 8 октября концерт пройдет в Ярославле!"
             },
             {
-                question: "В каком жанре преимущественно исполняет песни Татьяна?",
-                options: ["Рок", "Народная / Фолк-поп музыка", "Джаз", "Электронная музыка"],
-                correct: 1
+                question: "В каком жанре преимущественно исполняет свои песни Татьяна?",
+                options: ["Рок-музыка", "Народная / Фолк-поп музыка", "Джаз и блюз", "Электронная клубная музыка"],
+                correct: 1,
+                correctComment: "Верно! Чарующая русская фолк-поп музыка её визитная карточка! 🎵",
+                wrongComment: "Эх, нет! Татьяна — звезда народной и фолк-поп музыки."
+            },
+            {
+                question: "Какой праздник отмечается 9 сентября, в день рождения Татьяны Куртуковой?",
+                options: ["День музыки", "День рождения певицы", "День весны", "День народного единства"],
+                correct: 1,
+                correctComment: "Идеально! День рождения нашей любимой артистки! 🎂",
+                wrongComment: "Ха-ха, ну это же день рождения самой Татьяны! 🎈"
+            },
+            {
+                question: "Какой инструмент часто создает неповторимый колорит в её народных композициях?",
+                options: ["Электрогитара", "Балалайка / народные мотивы", "Саксофон", "Барабанная установка"],
+                correct: 1,
+                correctComment: "Верно! Традиционные мотивы и инструменты звучат волшебно! ✨",
+                wrongComment: "Не угадали! Акцент делается на традиционные русские мотивы."
+            },
+            {
+                question: "Какой город следует сразу за Ярославлем в гастрольном графике концертов октября 2026?",
+                options: ["Иваново", "Москва", "Санкт-Петербург", "Казань"],
+                correct: 0,
+                correctComment: "Супер! 9 октября концерт состоится в Иваново! 🎫",
+                wrongComment: "Ошибка! Следующий город по списку — Иваново."
+            },
+            {
+                question: "Что всегда отличает выступления Татьяны Куртуковой на сцене?",
+                options: ["Мгновенная смена 10 костюмов", "Невероятная искренность и живой голос", "Игра на барабанах соло", "Оперный вокал"],
+                correct: 1,
+                correctComment: "Точно! Её искренность покоряет зрителей с первой ноты! ❤️",
+                wrongComment: "Неверно! Главное её богатство — это искренность и чистый живой голос."
             }
         ];
 
         let currentQuestion = 0;
         let score = 0;
+        let isAnswered = false;
 
         function loadQuestion() {
+            isAnswered = false;
             const q = questions[currentQuestion];
-            document.getElementById('questionText').innerText = `${currentQuestion + 1}. ${q.question}`;
+            
+            // تحديث العداد والنقاط في الأعلى
+            document.getElementById('questionCounter').innerText = `Вопрос: ${currentQuestion + 1} / ${questions.length}`;
+            document.getElementById('currentScore').innerText = `Очки: ${score}`;
+            
+            document.getElementById('questionText').innerText = q.question;
             const grid = document.getElementById('optionsGrid');
             grid.innerHTML = '';
+
+            const feedbackBox = document.getElementById('feedbackBox');
+            feedbackBox.style.display = 'none';
 
             q.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
                 btn.innerText = opt;
-                btn.onclick = () => selectOption(idx);
+                btn.onclick = () => selectOption(idx, btn);
                 grid.appendChild(btn);
             });
         }
 
-        function selectOption(idx) {
-            if (idx === questions[currentQuestion].correct) {
+        function selectOption(idx, selectedBtn) {
+            if (isAnswered) return; // منع الضغط المتكرر
+            isAnswered = true;
+
+            const q = questions[currentQuestion];
+            const feedbackBox = document.getElementById('feedbackBox');
+            const buttons = document.querySelectorAll('.option-btn');
+
+            // تعطيل الأزرار بعد الاختيار
+            buttons.forEach(b => b.disabled = true);
+
+            if (idx === q.correct) {
                 score++;
-            }
-            currentQuestion++;
-            if (currentQuestion < questions.length) {
-                loadQuestion();
+                selectedBtn.style.background = 'rgba(46, 204, 113, 0.3)';
+                selectedBtn.style.borderColor = '#2ecc71';
+                feedbackBox.className = 'feedback-box correct';
+                feedbackBox.innerText = q.correctComment;
             } else {
-                showResults();
+                selectedBtn.style.background = 'rgba(231, 76, 60, 0.3)';
+                selectedBtn.style.borderColor = '#e74c3c';
+                // إظهار الإجابة الصحيحة باللون الأخضر
+                buttons[q.correct].style.background = 'rgba(46, 204, 113, 0.3)';
+                buttons[q.correct].style.borderColor = '#2ecc71';
+                
+                feedbackBox.className = 'feedback-box wrong';
+                feedbackBox.innerText = q.wrongComment;
             }
+
+            document.getElementById('currentScore').innerText = `Очки: ${score}`;
+            feedbackBox.style.display = 'block';
+
+            // الانتقال للسؤال التالي بعد ثانيتين
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }, 2200);
         }
 
         function showResults() {
+            document.getElementById('quizStats').style.display = 'none';
             document.getElementById('quizContainer').style.display = 'none';
             const resultBox = document.getElementById('resultBox');
             resultBox.style.display = 'block';
@@ -310,11 +479,11 @@
 
             let comment = "";
             if (score === questions.length) {
-                comment = "Вы настоящий преданный поклонник Татьяны Куртуковой! 🌟";
+                comment = "🏆 Великолепно! Вы абсолютный эксперт и самый преданный фанат Татьяны Куртуковой! 🌟";
             } else if (score >= questions.length / 2) {
-                comment = "Отличный результат! Вы отлично знаете творчество Татьяны! 🎵";
+                comment = "🎵 Отличный результат! Вы прекрасно знаете творчество и концерты Татьяны! ✨";
             } else {
-                comment = "Хорошая попытка! Попробуйте еще раз, чтобы узнать больше! ✨";
+                comment = "😅 Неплохая попытка! Стоит перечитать разделы сайта и попробовать снова! 💪";
             }
             document.getElementById('resultComment').innerText = comment;
         }
@@ -322,6 +491,8 @@
         function restartQuiz() {
             currentQuestion = 0;
             score = 0;
+            isAnswered = false;
+            document.getElementById('quizStats').style.display = 'flex';
             document.getElementById('quizContainer').style.display = 'block';
             document.getElementById('resultBox').style.display = 'none';
             loadQuestion();
