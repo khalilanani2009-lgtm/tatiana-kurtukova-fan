@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цитаты и Вдохновение — Татьяна Куртукова</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #d4af37;
+            --primary-glow: rgba(212, 175, 55, 0.6);
+            --bg-dark: #080808;
+            --card-bg: rgba(18, 18, 18, 0.9);
+            --text-light: #ffffff;
+            --accent-gold: #f3e5ab;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bg-hero {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, rgba(8,8,8,0.7), rgba(8,8,8,0.95)),
+                        url('profile.jpg') center/cover no-repeat;
+            z-index: -2;
+            animation: zoomBg 25s infinite alternate ease-in-out;
+        }
+
+        @keyframes zoomBg { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+
+        .glow-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15), transparent 75%);
+            z-index: -1; pointer-events: none;
+        }
+
+        /* شريط التنقل العلوي والقائمة الجانبية */
+        nav {
+            background: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary);
+            padding: 12px 25px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .menu-toggle-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 1.4rem;
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle-btn:hover {
+            background: var(--primary); color: #000;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .sidebar {
+            position: fixed; top: 0; left: -280px;
+            width: 280px; height: 100%;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-right: 1px solid var(--primary);
+            z-index: 2000;
+            transition: left 0.4s ease;
+            padding: 25px 20px;
+            display: flex; flex-direction: column;
+        }
+
+        .sidebar.open { left: 0; }
+
+        .sidebar-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 15px; margin-bottom: 25px;
+        }
+
+        .sidebar-title { color: var(--primary); font-size: 1.2rem; font-weight: bold; }
+
+        .close-btn {
+            background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;
+        }
+
+        .sidebar-links { display: flex; flex-direction: column; gap: 15px; }
+
+        .sidebar-links a {
+            color: #fff; text-decoration: none; font-size: 1.1rem; font-weight: bold;
+            padding: 12px 15px; border-radius: 10px; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .sidebar-links a:hover, .sidebar-links a.active {
+            background: rgba(212, 175, 55, 0.15); color: var(--primary);
+        }
+
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            z-index: 1500; display: none;
+        }
+
+        .overlay-bg.show { display: block; }
+
+        .header-socials { display: flex; gap: 12px; }
+
+        .social-icon-btn {
+            color: #ffffff; font-size: 1.2rem; width: 38px; height: 38px;
+            border-radius: 50%; border: 1px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.3s ease; background: rgba(0,0,0,0.5);
+        }
+
+        .social-icon-btn:hover {
+            background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* تنسيق محتوى الاقتباسات */
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 40px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .page-title {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .quote-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .quote-card::before {
+            content: '\f10d';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-dark);
+            color: var(--primary);
+            padding: 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .quote-text {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .quote-author {
+            color: #aaa;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .next-quote-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 12px 25px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .next-quote-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hero"></div>
+    <div class="glow-overlay"></div>
+    <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- القائمة الجانبية -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Меню навигации</span>
+            <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-links">
+            <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+            <a href="concerts.html"><i class="fas fa-ticket-alt"></i> Концерты</a>
+            <a href="about.html"><i class="fas fa-user-star"></i> О Татьяне</a>
+            <a href="quotes.html" class="active"><i class="fas fa-quote-right"></i> Цитаты</a>
+            <a href="game.html"><i class="fas fa-gamepad"></i> Игры (Мини-игра)</a>
+        </div>
+    </aside>
+
+    <nav>
+        <button class="menu-toggle-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        <div class="header-socials">
+            <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title" data-aos="fade-down">Вдохновение и Мудрость</h1>
+        
+        <div class="quote-card" data-aos="zoom-in">
+            <p class="quote-text" id="quoteDisplay">
+                «Музыка — это не просто звуки. Это невидимый мост между прошлым и будущим, соединяющий поколения через вечную память народа.»
+            </p>
+            <span class="quote-author">— Татьяна Куртукова</span>
+        </div>
+
+        <button class="next-quote-btn" onclick="getRandomQuote()" data-aos="fade-up">
+            <i class="fas fa-sync-alt"></i> Другая цитата (اقتباس آخر)
+        </button>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 900, once: true });
+
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('show');
+        }
+
+        // قائمة الاقتباسات الملهمة
+        const quotes = [
+            {
+                text: "«Музыка — это не просто звуки. Это невидимый мост между прошлым и будущим, соединяющий поколения через вечную память народа.»",
+                author: "— Татьяна Куртукова"
+            },
+            {
+                text: "«В каждой русской песне заложена такая сила и чистота духа, способная исцелить любое сердце.»",
+                author: "— Татьяна Куртукова"
+            },
+            {
+                text: "«Любовь к родной земле — это то, что дает нам крылья и держит наши корни крепкими.»",
+                author: "— Татьяна Куртукова"
+            },
+            {
+                text: "«Искренность в творчестве — это единственное, чему верит зритель без единого слова.»",
+                author: "— Татьяна Куртукова"
+            },
+            {
+                text: "«Песня живет тогда, когда её поют всем сердцем, передавая из поколения в поколение.»",
+                author: "— Татьяна Куртукова"
+            }
+        ];
+
+        function getRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quoteDisplay = document.getElementById('quoteDisplay');
+            
+            // تأثير حركة خفيف عند التغيير
+            quoteDisplay.style.opacity = 0;
+            setTimeout(() => {
+                quoteDisplay.textContent = quotes[randomIndex].text;
+                document.querySelector('.quote-author').textContent = quotes[randomIndex].author;
+                quoteDisplay.style.opacity = 1;
+                quoteDisplay.style.transition = "opacity 0.5s ease";
+            }, 200);
+        }
+    </script>
+</body>
+</html>
