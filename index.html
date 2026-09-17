@@ -100,7 +100,7 @@
         .sidebar-links a {
             color: #fff; text-decoration: none; font-size: 1.1rem; font-weight: bold;
             padding: 12px 15px; border-radius: 10px; transition: all 0.3s ease;
-            display: flex; align-items: center; gap: 12px;
+            display: flex; align-items: center; gap: 12px; cursor: pointer;
         }
 
         .sidebar-links a:hover, .sidebar-links a.active {
@@ -179,6 +179,7 @@
             display: inline-block; background: linear-gradient(45deg, #d4af37, #aa820a);
             color: #000; padding: 12px 28px; border-radius: 25px;
             text-decoration: none; font-weight: bold; margin-top: 15px;
+            cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
@@ -252,7 +253,6 @@
             padding-right: 5px;
         }
 
-        /* تخصيص شريط التمرير للوحة المعجبين */
         .fans-list::-webkit-scrollbar { width: 5px; }
         .fans-list::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
         .fans-list::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
@@ -273,7 +273,7 @@
     <div class="glow-overlay"></div>
     <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
 
-    <!-- القائمة الجانبية -->
+    <!-- القائمة الجانبية (تمت إضافة رابط صفحة الألعاب هنا) -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="sidebar-title">Меню навигации</span>
@@ -283,6 +283,7 @@
             <a href="index.html" class="active"><i class="fas fa-home"></i> Главная</a>
             <a href="concerts.html"><i class="fas fa-ticket-alt"></i> Концерты</a>
             <a href="about.html"><i class="fas fa-user-star"></i> О Татьяне</a>
+            <a href="game.html"><i class="fas fa-gamepad"></i> Игры (Мини-игра)</a>
         </div>
     </aside>
 
@@ -449,7 +450,6 @@
             loadFans();
         });
 
-        // دالة أمان بسيطة لمنع حقن السكريات (XSS)
         function escapeHtml(text) {
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
