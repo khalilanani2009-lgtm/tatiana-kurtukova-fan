@@ -15,11 +15,7 @@
             --text-light: #ffffff;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-dark);
@@ -29,13 +25,9 @@
             position: relative;
         }
 
-        /* خلفية سينمائية متحركة */
         .bg-hero {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(to bottom, rgba(8,8,8,0.75), rgba(8,8,8,0.95)),
                         url('profile.jpg') center/cover no-repeat;
             z-index: -2;
@@ -48,339 +40,148 @@
         }
 
         .glow-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15), transparent 70%);
-            z-index: -1;
-            pointer-events: none;
+            z-index: -1; pointer-events: none;
         }
 
-        /* شريط التنقل العلوي */
         nav {
             background: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--primary);
             padding: 12px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
         }
 
         .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: color 0.3s;
+            color: #ffffff; text-decoration: none; margin: 0 15px; font-weight: bold; font-size: 1rem; transition: color 0.3s;
         }
 
         .nav-links a:hover, .nav-links a.active {
-            color: var(--primary);
-            text-shadow: 0 0 8px var(--primary-glow);
+            color: var(--primary); text-shadow: 0 0 8px var(--primary-glow);
         }
 
-        .header-socials {
-            display: flex;
-            gap: 12px;
-        }
+        .header-socials { display: flex; gap: 12px; }
 
         .social-icon-btn {
-            color: #ffffff;
-            font-size: 1.2rem;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            border: 1px solid var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            background: rgba(0,0,0,0.5);
+            color: #ffffff; font-size: 1.2rem; width: 38px; height: 38px;
+            border-radius: 50%; border: 1px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.3s ease; background: rgba(0,0,0,0.5);
         }
 
         .social-icon-btn:hover {
-            background: var(--primary);
-            color: #000000;
-            box-shadow: 0 0 15px var(--primary);
-            transform: scale(1.1);
+            background: var(--primary); color: #000000; box-shadow: 0 0 15px var(--primary); transform: scale(1.1);
         }
 
-        /* شريط الأخبار المتحرك */
         .news-ticker {
             background: rgba(212, 175, 55, 0.15);
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--primary);
-            padding: 8px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            font-size: 0.9rem;
-            font-weight: bold;
+            color: var(--primary); padding: 8px 0; overflow: hidden; white-space: nowrap; font-size: 0.9rem; font-weight: bold;
         }
 
-        .news-ticker-content {
-            display: inline-block;
-            animation: ticker 25s linear infinite;
-        }
+        .news-ticker-content { display: inline-block; animation: ticker 25s linear infinite; }
 
         @keyframes ticker {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
 
-        header {
-            text-align: center;
-            padding: 40px 20px 20px;
-        }
+        header { text-align: center; padding: 40px 20px 20px; }
 
         .avatar-glow {
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 30px var(--primary-glow);
-            animation: pulse 3s infinite alternate ease-in-out;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-            margin-bottom: 15px;
+            width: 170px; height: 170px; border-radius: 50%; border: 3px solid var(--primary);
+            box-shadow: 0 0 30px var(--primary-glow); animation: pulse 3s infinite alternate ease-in-out;
+            object-fit: cover; transition: transform 0.4s ease; margin-bottom: 15px;
         }
 
-        .avatar-glow:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.9);
-        }
+        .avatar-glow:hover { transform: scale(1.08); box-shadow: 0 0 50px rgba(212, 175, 55, 0.9); }
 
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
             100% { transform: scale(1.06); box-shadow: 0 0 45px rgba(212, 175, 55, 0.85); }
         }
 
-        h1 {
-            color: var(--primary);
-            margin: 10px 0 5px;
-            font-size: 2.6rem;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
+        h1 { color: var(--primary); margin: 10px 0 5px; font-size: 2.6rem; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .subtitle { color: #ddd; font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 1px; }
 
-        .subtitle {
-            color: #ddd;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
 
         .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(212, 175, 55, 0.35);
-            border-radius: 20px;
-            padding: 28px;
-            margin-bottom: 30px;
-            text-align: center;
-            backdrop-filter: blur(8px);
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 20px; padding: 28px; margin-bottom: 30px; text-align: center;
+            backdrop-filter: blur(8px); transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
             box-shadow: 0 8px 25px rgba(0,0,0,0.6);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
-        }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3); }
 
-        .section-title {
-            color: var(--primary);
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+        .section-title { color: var(--primary); font-size: 1.4rem; font-weight: bold; margin-bottom: 18px; display: flex; align-items: center; justify-content: center; gap: 10px; }
 
-        .timer-display {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #fff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-        }
+        .timer-display { font-size: 2rem; font-weight: bold; color: #fff; letter-spacing: 2px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
 
         .btn-ticket {
-            display: inline-block;
-            background: linear-gradient(45deg, #d4af37, #aa820a);
-            color: #000;
-            padding: 12px 28px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
+            display: inline-block; background: linear-gradient(45deg, #d4af37, #aa820a);
+            color: #000; padding: 12px 28px; border-radius: 25px; text-decoration: none;
+            font-weight: bold; margin-top: 15px; transition: all 0.3s ease; cursor: pointer; border: none;
         }
 
-        .btn-ticket:hover {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.9);
-            transform: scale(1.05);
+        .btn-ticket:hover { box-shadow: 0 0 20px rgba(212, 175, 55, 0.9); transform: scale(1.05); }
+
+        .slideshow-container { position: relative; max-width: 100%; height: 420px; margin: auto; border-radius: 16px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        .mySlides { display: none; height: 100%; width: 100%; }
+        .mySlides img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .fade { animation-name: fade; animation-duration: 1.2s; }
+
+        @keyframes fade { from { opacity: 0.4; transform: scale(1.03); } to { opacity: 1; transform: scale(1); } }
+
+        .prev, .next { cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); padding: 12px 18px; color: var(--primary); font-weight: bold; font-size: 18px; transition: 0.3s ease; border-radius: 50%; user-select: none; background: rgba(0, 0, 0, 0.6); border: 1px solid var(--primary); }
+        .next { right: 15px; } .prev { left: 15px; }
+        .prev:hover, .next:hover { background-color: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
+
+        .dots-container { text-align: center; margin-top: 15px; }
+        .dot { cursor: pointer; height: 10px; width: 10px; margin: 0 4px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; display: inline-block; transition: background-color 0.4s ease, transform 0.4s ease; }
+        .dot.active, .dot:hover { background-color: var(--primary); box-shadow: 0 0 10px var(--primary); transform: scale(1.3); }
+
+        .hits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px; }
+        .hit-item { background: rgba(30, 30, 30, 0.8); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; padding: 15px; text-align: center; transition: all 0.3s ease; }
+        .hit-item:hover { border-color: var(--primary); transform: scale(1.03); }
+        .hit-title { font-weight: bold; color: var(--primary); margin-bottom: 8px; }
+
+        .fan-form { display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 15px auto 0; }
+        .form-input { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.4); background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 1rem; outline: none; transition: border-color 0.3s; }
+        .form-input:focus { border-color: var(--primary); box-shadow: 0 0 8px var(--primary-glow); }
+        
+        .success-message { display: none; color: var(--primary); font-weight: bold; margin-top: 15px; font-size: 1.1rem; }
+
+        /* تنسيق قائمة الأعضاء المنضمين */
+        .fan-list-container {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(212, 175, 55, 0.3);
         }
 
-        /* معرض الصور المتحرك */
-        .slideshow-container {
-            position: relative;
-            max-width: 100%;
-            height: 420px;
-            margin: auto;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
-        }
-
-        .mySlides {
-            display: none;
-            height: 100%;
-            width: 100%;
-        }
-
-        .mySlides img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
-        }
-
-        .fade {
-            animation-name: fade;
-            animation-duration: 1.2s;
-        }
-
-        @keyframes fade {
-            from { opacity: 0.4; transform: scale(1.03); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 12px 18px;
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.3s ease;
-            border-radius: 50%;
-            user-select: none;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--primary);
-        }
-
-        .next { right: 15px; }
-        .prev { left: 15px; }
-
-        .prev:hover, .next:hover {
-            background-color: var(--primary);
-            color: #000;
-            box-shadow: 0 0 15px var(--primary);
-        }
-
-        .dots-container {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .dot {
-            cursor: pointer;
-            height: 10px;
-            width: 10px;
-            margin: 0 4px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.4s ease, transform 0.4s ease;
-        }
-
-        .dot.active, .dot:hover {
-            background-color: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-            transform: scale(1.3);
-        }
-
-        /* شبكة الأغاني الشهيرة */
-        .hits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .hit-item {
-            background: rgba(30, 30, 30, 0.8);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .hit-item:hover {
-            border-color: var(--primary);
-            transform: scale(1.03);
-        }
-
-        .hit-title {
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        /* تنسيق نموذج الانضمام للفان كلوب */
-        .fan-form {
+        .fan-badges-grid {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 500px;
-            margin: 15px auto 0;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .form-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 8px var(--primary-glow);
-        }
-
-        .success-message {
-            display: none;
-            color: var(--primary);
-            font-weight: bold;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
             margin-top: 15px;
-            font-size: 1.1rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .fan-badge {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--primary);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
     </style>
 </head>
@@ -412,7 +213,6 @@
         </div>
     </div>
 
-    <!-- الهيدر والصورة الدائرية المتوهجة -->
     <header data-aos="fade-down">
         <img class="avatar-glow" src="profile.jpg" alt="Татьяна Куртукова">
         <h1>Татьяна Куртукова</h1>
@@ -427,25 +227,16 @@
             <a href="concerts.html" class="btn-ticket">Купить билет на концерт</a>
         </div>
 
-        <!-- معرض الصور المتحرك تلقائياً -->
+        <!-- معرض الصور المتحرك -->
         <div class="card" data-aos="fade-up" data-aos-delay="100">
             <div class="section-title"><i class="fas fa-images"></i> Галерея Татьяны</div>
-            
             <div class="slideshow-container">
-                <div class="mySlides fade">
-                    <img src="photo1.jpg" alt="Татьяна Куртукова">
-                </div>
-                <div class="mySlides fade">
-                    <img src="photo2.jpg" alt="Татьяна Куртукова">
-                </div>
-                <div class="mySlides fade">
-                    <img src="photo3.jpg" alt="Татьяна Куртукова">
-                </div>
-
+                <div class="mySlides fade"><img src="photo1.jpg" alt="Татьяна Куртукова"></div>
+                <div class="mySlides fade"><img src="photo2.jpg" alt="Татьяна Куртукова"></div>
+                <div class="mySlides fade"><img src="photo3.jpg" alt="Татьяна Куртукова"></div>
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
             </div>
-
             <div class="dots-container">
                 <span class="dot" onclick="currentSlide(1)"></span>
                 <span class="dot" onclick="currentSlide(2)"></span>
@@ -453,38 +244,37 @@
             </div>
         </div>
 
-        <!-- شبكة الأغاني الشهيرة -->
+        <!-- شبكة الأغاني -->
         <div class="card" data-aos="fade-up" data-aos-delay="200">
             <div class="section-title"><i class="fas fa-star"></i> Главные Хиты</div>
             <div class="hits-grid">
-                <div class="hit-item">
-                    <div class="hit-title">«Матушка»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Главный хит страны</p>
-                </div>
-                <div class="hit-item">
-                    <div class="hit-title">«Ромашка-Ромашка»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Душевный фолк-хит</p>
-                </div>
-                <div class="hit-item">
-                    <div class="hit-title">«Русская зима»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Невероятная атмосфера</p>
-                </div>
+                <div class="hit-item"><div class="hit-title">«Матушка»</div><p style="font-size: 0.85rem; color: #bbb;">Главный хит страны</p></div>
+                <div class="hit-item"><div class="hit-title">«Ромашка-Ромашка»</div><p style="font-size: 0.85rem; color: #bbb;">Душевный фолк-хит</p></div>
+                <div class="hit-item"><div class="hit-title">«Русская зима»</div><p style="font-size: 0.85rem; color: #bbb;">Невероятная атмосфера</p></div>
             </div>
         </div>
 
-        <!-- نموذج الانضمام إلى الفان كلوب -->
+        <!-- نموذج الانضمام وقائمة الأسماء -->
         <div class="card" data-aos="fade-up" data-aos-delay="300">
             <div class="section-title"><i class="fas fa-users"></i> Присоединяйтесь к фан-клубу</div>
-            <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 10px;">Впишите своё имя и город, чтобы поддержать Татьяну и стать частью нашего сообщества!</p>
+            <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 10px;">Впишите своё имя и город, чтобы поддержать Татьяну!</p>
             
             <form class="fan-form" id="clubForm" onsubmit="submitFanForm(event)">
-                <input type="text" class="form-input" id="fanName" placeholder="Ваше имя (Ваше имя)" required>
-                <input type="text" class="form-input" id="fanCity" placeholder="Ваш город (Ваш город)" required>
+                <input type="text" class="form-input" id="fanName" placeholder="Ваше имя" required>
+                <input type="text" class="form-input" id="fanCity" placeholder="Ваш город" required>
                 <button type="submit" class="btn-ticket">Вступить в фан-клуб</button>
             </form>
             
             <div class="success-message" id="successMsg">
                 ✨ Спасибо! Вы успешно присоединились к фан-клубу Татьяны Куртуковой! ❤️
+            </div>
+
+            <!-- عرض الأسماء في الموقع -->
+            <div class="fan-list-container">
+                <div style="color: var(--primary); font-weight: bold; font-size: 1.1rem;"><i class="fas fa-heart"></i> Участники фан-клуба:</div>
+                <div class="fan-badges-grid" id="fanList">
+                    <!-- تظهر الأسماء هنا تلقائياً -->
+                </div>
             </div>
         </div>
     </div>
@@ -506,20 +296,15 @@
 
         let slideIndex = 0;
         let slideTimer;
-
         showSlidesAuto();
 
         function showSlidesAuto() {
             let slides = document.getElementsByClassName("mySlides");
             let dots = document.getElementsByClassName("dot");
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
+            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
             slideIndex++;
             if (slideIndex > slides.length) {slideIndex = 1}    
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
+            for (let i = 0; i < dots.length; i++) { dots[i].className = dots[i].className.replace(" active", ""); }
             if(slides[slideIndex-1]) {
                 slides[slideIndex-1].style.display = "block";  
                 dots[slideIndex-1].className += " active";
@@ -527,37 +312,54 @@
             slideTimer = setTimeout(showSlidesAuto, 3500);
         }
 
-        function plusSlides(n) {
-            clearTimeout(slideTimer);
-            showSlideManual(slideIndex += n);
-        }
-
-        function currentSlide(n) {
-            clearTimeout(slideTimer);
-            showSlideManual(slideIndex = n);
-        }
+        function plusSlides(n) { clearTimeout(slideTimer); showSlideManual(slideIndex += n); }
+        function currentSlide(n) { clearTimeout(slideTimer); showSlideManual(slideIndex = n); }
 
         function showSlideManual(n) {
             let slides = document.getElementsByClassName("mySlides");
             let dots = document.getElementsByClassName("dot");
             if (n > slides.length) {slideIndex = 1}
             if (n < 1) {slideIndex = slides.length}
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
+            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            for (let i = 0; i < dots.length; i++) { dots[i].className = dots[i].className.replace(" active", ""); }
             slides[slideIndex-1].style.display = "block";  
             dots[slideIndex-1].className += " active";
             slideTimer = setTimeout(showSlidesAuto, 3500);
         }
 
+        // إدارة وحفظ الأسماء
+        let defaultFans = [
+            { name: "Анна", city: "Москва" },
+            { name: "Дмитрий", city: "Санкт-Петербург" },
+            { name: "Елена", city: "Ярославль" }
+        ];
+
+        function loadFans() {
+            let savedFans = JSON.parse(localStorage.getItem('kurtukova_fans')) || defaultFans;
+            let fanListElement = document.getElementById("fanList");
+            fanListElement.innerHTML = "";
+            savedFans.forEach(fan => {
+                fanListElement.innerHTML += `<div class="fan-badge"><i class="fas fa-star" style="color: var(--primary);"></i> ${fan.name} (${fan.city})</div>`;
+            });
+        }
+
         function submitFanForm(e) {
             e.preventDefault();
-            document.getElementById("clubForm").style.display = "none";
-            document.getElementById("successMsg").style.display = "block";
+            let name = document.getElementById("fanName").value.trim();
+            let city = document.getElementById("fanCity").value.trim();
+
+            if(name && city) {
+                let savedFans = JSON.parse(localStorage.getItem('kurtukova_fans')) || defaultFans;
+                savedFans.push({ name: name, city: city });
+                localStorage.setItem('kurtukova_fans', JSON.stringify(savedFans));
+
+                document.getElementById("clubForm").style.display = "none";
+                document.getElementById("successMsg").style.display = "block";
+                loadFans();
+            }
         }
+
+        window.onload = loadFans;
     </script>
 </body>
 </html>
