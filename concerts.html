@@ -5,119 +5,352 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Концерты — Татьяна Куртукова</title>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
             --primary: #d4af37;
+            --primary-glow: rgba(212, 175, 55, 0.6);
             --bg-dark: #080808;
-            --card-bg: #121212;
+            --card-bg: rgba(18, 18, 18, 0.85);
             --text-light: #ffffff;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
             font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .bg-hero {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, rgba(8,8,8,0.85), rgba(8,8,8,0.95)),
+                        url('profile.jpg') center/cover no-repeat;
+            z-index: -2;
         }
 
         nav {
-            background: #111111;
+            background: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--primary);
-            padding: 15px;
+            padding: 12px 25px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .menu-toggle-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 1.4rem;
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle-btn:hover {
+            background: var(--primary); color: #000;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .sidebar {
+            position: fixed; top: 0; left: -280px;
+            width: 280px; height: 100%;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--primary);
+            z-index: 2000;
+            transition: left 0.4s ease;
+            padding: 25px 20px;
+            display: flex; flex-direction: column;
+        }
+
+        .sidebar.open { left: 0; }
+
+        .sidebar-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 15px; margin-bottom: 25px;
+        }
+
+        .sidebar-title { color: var(--primary); font-size: 1.2rem; font-weight: bold; }
+        .close-btn { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+
+        .sidebar-links { display: flex; flex-direction: column; gap: 15px; }
+
+        .sidebar-links a {
+            color: #fff; text-decoration: none; font-size: 1.1rem; font-weight: bold;
+            padding: 12px 15px; border-radius: 10px; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .sidebar-links a:hover, .sidebar-links a.active {
+            background: rgba(212, 175, 55, 0.15); color: var(--primary);
+        }
+
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(3px);
+            z-index: 1500; display: none;
+        }
+
+        .overlay-bg.show { display: block; }
+
+        .header-socials { display: flex; gap: 12px; }
+
+        .social-icon-btn {
+            color: #ffffff; font-size: 1.2rem; width: 38px; height: 38px;
+            border-radius: 50%; border: 1px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.3s ease; background: rgba(0,0,0,0.5);
+        }
+
+        .social-icon-btn:hover {
+            background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary);
+        }
+
+        .container { max-width: 950px; margin: 0 auto; padding: 30px 20px; }
+
+        .page-title {
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            color: var(--primary);
+            font-size: 2.3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: color 0.3s;
+        .page-subtitle {
+            text-align: center;
+            color: #ddd;
+            margin-bottom: 35px;
+            font-size: 1.1rem;
         }
 
-        nav a:hover, nav a.active { color: var(--primary); }
-
-        .container { max-width: 850px; margin: 40px auto; padding: 0 20px; }
-
-        h1 { color: var(--primary); text-align: center; font-size: 2rem; margin-bottom: 30px; }
+        /* قائمة الحفلات */
+        .concerts-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
 
         .concert-card {
             background: var(--card-bg);
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 20px;
+            padding: 22px 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
             flex-wrap: wrap;
             gap: 15px;
-            transition: all 0.3s;
         }
 
         .concert-card:hover {
-            transform: translateY(-4px);
             border-color: var(--primary);
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
         }
 
-        .concert-date { color: var(--primary); font-size: 1.2rem; font-weight: bold; }
-        .concert-city { font-size: 1.4rem; font-weight: bold; margin: 5px 0; }
+        .concert-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
-        .btn-ticket {
+        .concert-date {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .concert-location {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .concert-venue {
+            color: #bbb;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-buy {
             background: linear-gradient(45deg, #d4af37, #aa820a);
             color: #000;
-            padding: 10px 22px;
+            padding: 12px 24px;
             border-radius: 25px;
             text-decoration: none;
             font-weight: bold;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
 
-        .btn-ticket:hover {
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+        .btn-buy:hover {
             transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+        }
+
+        @media (max-width: 600px) {
+            .concert-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .btn-buy {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-hero"></div>
+    <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- القائمة الجانبية -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Меню навигации</span>
+            <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-links">
+            <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+            <a href="concerts.html" class="active"><i class="fas fa-ticket-alt"></i> Концерты</a>
+            <a href="about.html"><i class="fas fa-user-star"></i> О Татьяне</a>
+        </div>
+    </aside>
+
     <nav>
-        <a href="index.html">Главная</a>
-        <a href="concerts.html" class="active">Концерты</a>
-        <a href="about.html">О Татьяне</a>
+        <button class="menu-toggle-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        <div class="header-socials">
+            <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn"><i class="fab fa-tiktok"></i></a>
+        </div>
     </nav>
 
     <div class="container">
-        <h1 data-aos="fade-down">Афиша и График Концертов «Матушка-Земля»</h1>
+        <h1 class="page-title" data-aos="fade-down"><i class="fas fa-music"></i> Афиша Концертов</h1>
+        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Тур «Матушка-Земля» — График выступлений Татьяны Куртуковой</p>
 
-        <!-- حفلة ياروسلافل -->
-        <div class="concert-card" data-aos="fade-up">
-            <div>
-                <div class="concert-date">📅 8 октября 2026 | 19:00</div>
-                <div class="concert-city">Ярославль</div>
-                <div style="color: #aaa;">КЗЦ «Миллениум»</div>
-            </div>
-            <a href="https://gamma-music.ru/ktur_matushka_zemlya" target="_blank" class="btn-ticket">Купить билет</a>
-        </div>
+        <div class="concerts-grid">
 
-        <!-- حفلة إيفانوفو -->
-        <div class="concert-card" data-aos="fade-up" data-aos-delay="100">
-            <div>
-                <div class="concert-date">📅 9 октября 2026 | 19:00</div>
-                <div class="concert-city">Иваново</div>
-                <div style="color: #aaa;">Музыкальный театр</div>
+            <!-- Ярославль -->
+            <div class="concert-card" data-aos="fade-up">
+                <div class="concert-info">
+                    <div class="concert-date"><i class="far fa-calendar-alt"></i> 8 октября 2026 | 19:00</div>
+                    <div class="concert-location">Ярославль</div>
+                    <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> КЗЦ «Миллениум»</div>
+                </div>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafIpYrv39aBWostYEhRM71jXYRdEv_Kw89D4Yxdpk16jpRarISkPDyKHE1J6w_aem_CdWTV17gXpysMVdmq1juJw" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
             </div>
-            <a href="https://gamma-music.ru/ktur_matushka_zemlya" target="_blank" class="btn-ticket">Купить билет</a>
+
+            <!-- Иваново -->
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="50">
+                <div class="concert-info">
+                    <div class="concert-date"><i class="far fa-calendar-alt"></i> 9 октября 2026 | 19:00</div>
+                    <div class="concert-location">Иваново</div>
+                    <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> «Центр Культуры и Отдыха Иванова»</div>
+                </div>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafIpYrv39aBWostYEhRM71jXYRdEv_Kw89D4Yxdpk16jpRarISkPDyKHE1J6w_aem_CdWTV17gXpysMVdmq1juJw" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <!-- Владивосток -->
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="concert-info">
+                    <div class="concert-date"><i class="far fa-calendar-alt"></i> 4 ноября 2026 | 19:00</div>
+                    <div class="concert-location">Владивосток</div>
+                    <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Концерт Холл (ex. Fesco Hall)</div>
+                </div>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafIpYrv39aBWostYEhRM71jXYRdEv_Kw89D4Yxdpk16jpRarISkPDyKHE1J6w_aem_CdWTV17gXpysMVdmq1juJw" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <!-- Южно-Сахалинск -->
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="150">
+                <div class="concert-info">
+                    <div class="concert-date"><i class="far fa-calendar-alt"></i> 6 ноября 2026 | 19:00</div>
+                    <div class="concert-location">Южно-Сахалинск</div>
+                    <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Сити Холл</div>
+                </div>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafIpYrv39aBWostYEhRM71jXYRdEv_Kw89D4Yxdpk16jpRarISkPDyKHE1J6w_aem_CdWTV17gXpysMVdmq1juJw" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <!-- Волгоград -->
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="concert-info">
+                    <div class="concert-date"><i class="far fa-calendar-alt"></i> 26 ноября 2026 | 19:00</div>
+                    <div class="concert-location">Волгоград</div>
+                    <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> ЦКЗ Волгоградской филармонии</div>
+                </div>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafIpYrv39aBWostYEhRM71jXYRdEv_Kw89D4Yxdpk16jpRarISkPDyKHE1J6w_aem_CdWTV17gXpysMVdmq1juJw" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <!-- Тольятти -->
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="250">
+                <div class="concert-info">
+                    <div class="concert-date"><i class="far fa-calendar-alt"></i> 2 декабря 2026 | 19:00</div>
+                    <div class="concert-location">Тольятти</div>
+                    <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> ДК Тольятти им Н.В. Абрамова</div>
+                </div>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafIpYrv39aBWostYEhRM71jXYRdEv_Kw89D4Yxdpk16jpRarISkPDyKHE1J6w_aem_CdWTV17gXpysMVdmq1juJw" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <!-- Самара -->
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="concert-info">
+                    <div class="concert-date"><i class="far fa-calendar-alt"></i> 3 декабря 2026 | 19:00</div>
+                    <div class="concert-location">Самара</div>
+                    <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Самарская государственная филармония</div>
+                </div>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafIpYrv39aBWostYEhRM71jXYRdEv_Kw89D4Yxdpk16jpRarISkPDyKHE1J6w_aem_CdWTV17gXpysMVdmq1juJw" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <!-- Ростов-на-Дону -->
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="350">
+                <div class="concert-info">
+                    <div class="concert-date"><i class="far fa-calendar-alt"></i> 2 февраля 2027 | 19:00</div>
+                    <div class="concert-location">Ростов-на-Дону</div>
+                    <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Театр драмы им. М. Горького</div>
+                </div>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafIpYrv39aBWostYEhRM71jXYRdEv_Kw89D4Yxdpk16jpRarISkPDyKHE1J6w_aem_CdWTV17gXpysMVdmq1juJw" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
+            <!-- Краснодар -->
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="concert-info">
+                    <div class="concert-date"><i class="far fa-calendar-alt"></i> 3 февраля 2027 | 19:00</div>
+                    <div class="concert-location">Краснодар</div>
+                    <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Центральный концертный зал</div>
+                </div>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafIpYrv39aBWostYEhRM71jXYRdEv_Kw89D4Yxdpk16jpRarISkPDyKHE1J6w_aem_CdWTV17gXpysMVdmq1juJw" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+            </div>
+
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>AOS.init({ duration: 900, once: true });</script>
+    <script>
+        AOS.init({ duration: 900, once: true });
+
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('show');
+        }
+    </script>
 </body>
 </html>
