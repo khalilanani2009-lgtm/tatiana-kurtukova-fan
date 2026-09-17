@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Татьяна Куртукова — Главная</title>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
             --primary: #d4af37;
@@ -23,38 +24,68 @@
             overflow-x: hidden;
         }
 
+        /* شريط التنقل العلوي مع الأيقونات */
         nav {
             background: #111111;
             border-bottom: 1px solid var(--primary);
-            padding: 15px;
-            text-align: center;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        nav a {
+        .nav-links a {
             color: #ffffff;
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 12px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: color 0.3s;
         }
 
-        nav a:hover, nav a.active {
+        .nav-links a:hover, .nav-links a.active {
             color: var(--primary);
+        }
+
+        /* أيقونات إنستغرام وتيك توك الصغيرة في الأعلى */
+        .header-socials {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icon-btn {
+            color: #ffffff;
+            font-size: 1.2rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon-btn:hover {
+            background: var(--primary);
+            color: #000000;
+            box-shadow: 0 0 10px var(--primary);
+            transform: scale(1.1);
         }
 
         header {
             text-align: center;
-            padding: 50px 20px 30px;
+            padding: 40px 20px 20px;
             background: radial-gradient(circle at center, rgba(212,175,55,0.18) 0%, rgba(8,8,8,1) 80%);
         }
 
         .avatar-glow {
-            width: 180px;
-            height: 180px;
+            width: 170px;
+            height: 170px;
             border-radius: 50%;
             border: 3px solid var(--primary);
             box-shadow: 0 0 30px var(--primary-glow);
@@ -73,7 +104,7 @@
             100% { transform: scale(1.06); box-shadow: 0 0 40px rgba(212, 175, 55, 0.8); }
         }
 
-        h1 { color: var(--primary); margin: 15px 0 5px; font-size: 2.3rem; letter-spacing: 1px; }
+        h1 { color: var(--primary); margin: 15px 0 5px; font-size: 2.2rem; letter-spacing: 1px; }
         .subtitle { color: #aaa; font-size: 1rem; margin-bottom: 10px; }
 
         .container { max-width: 800px; margin: 0 auto; padding: 20px; }
@@ -94,47 +125,32 @@
         .section-title { color: var(--primary); font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; }
         .timer-display { font-size: 1.8rem; font-weight: bold; color: #fff; letter-spacing: 2px; }
 
+        /* مشغل الصوت */
         audio {
             width: 100%;
             margin-top: 15px;
             border-radius: 10px;
-            filter: invert(0.9) hue-rotate(180deg);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .social-btn {
-            background: #1a1a1a;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            padding: 12px 24px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-btn:hover {
-            background: var(--primary);
-            color: #000;
-            box-shadow: 0 0 15px var(--primary);
-            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="active">Главная</a>
-        <a href="concerts.html">Концерты</a>
-        <a href="about.html">О Татьяне</a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Главная</a>
+            <a href="concerts.html">Концерты</a>
+            <a href="about.html">О Татьяне</a>
+        </div>
+        
+        <!-- أيقونات السوشيال ميديا في أعلى الصفحة -->
+        <div class="header-socials">
+            <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn" title="TikTok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
     </nav>
 
     <header data-aos="fade-down">
@@ -150,24 +166,15 @@
             <div class="timer-display" id="timer">Загрузка...</div>
         </div>
 
-        <!-- مشغل الموسيقى -->
+        <!-- مشغل الأغنية الشغال -->
         <div class="card" data-aos="fade-up" data-aos-delay="100">
             <div class="section-title">🎶 Главный хит «Матушка»</div>
-            <p style="color: #ccc; font-size: 0.95rem;">Нажмите кнопку воспроизведения для прослушивания:</p>
-            <audio controls preload="metadata">
-                <source src="https://cdns-preview-d.dzcdn.net/stream/c-d830b8058db3ea5e982ca0e6f77242d5-3.mp3" type="audio/mpeg">
+            <p style="color: #ccc; font-size: 0.95rem;">Слушайте трек прямо на сайте:</p>
+            <audio controls preload="auto">
+                <source src="https://mp3zen.net/files/songs/Tatiana_Kurtukova_-_Matushka.mp3" type="audio/mpeg">
+                <source src="https://zvuk.top/dl/song/38159" type="audio/mpeg">
                 Ваш браузер не поддерживает аудиоплеер.
             </audio>
-        </div>
-
-        <!-- أزرار وسائل التواصل الاجتماعي المباشرة -->
-        <div class="card" data-aos="fade-up" data-aos-delay="200">
-            <div class="section-title">🌐 Наши социальные сети</div>
-            <p style="color: #ddd; font-size: 0.95rem;">Подписывайтесь на наши фан-страницы:</p>
-            <div class="social-links">
-                <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-btn">📸 Instagram</a>
-                <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-btn">🎵 TikTok</a>
-            </div>
         </div>
     </div>
 
