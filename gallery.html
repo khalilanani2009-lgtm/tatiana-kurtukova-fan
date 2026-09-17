@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея и Воспоминания — Татьяна Куртукова</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #d4af37;
+            --primary-glow: rgba(212, 175, 55, 0.6);
+            --bg-dark: #080808;
+            --card-bg: rgba(18, 18, 18, 0.9);
+            --text-light: #ffffff;
+            --accent-gold: #f3e5ab;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .bg-hero {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, rgba(8,8,8,0.7), rgba(8,8,8,0.95)),
+                        url('profile.jpg') center/cover no-repeat;
+            z-index: -2;
+            animation: zoomBg 25s infinite alternate ease-in-out;
+        }
+
+        @keyframes zoomBg { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+
+        .glow-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15), transparent 75%);
+            z-index: -1; pointer-events: none;
+        }
+
+        /* شريط التنقل العلوي والقائمة الجانبية */
+        nav {
+            background: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary);
+            padding: 12px 25px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .menu-toggle-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 1.4rem;
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle-btn:hover {
+            background: var(--primary); color: #000;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .sidebar {
+            position: fixed; top: 0; left: -280px;
+            width: 280px; height: 100%;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-right: 1px solid var(--primary);
+            z-index: 2000;
+            transition: left 0.4s ease;
+            padding: 25px 20px;
+            display: flex; flex-direction: column;
+        }
+
+        .sidebar.open { left: 0; }
+
+        .sidebar-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 15px; margin-bottom: 25px;
+        }
+
+        .sidebar-title { color: var(--primary); font-size: 1.2rem; font-weight: bold; }
+
+        .close-btn {
+            background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;
+        }
+
+        .sidebar-links { display: flex; flex-direction: column; gap: 15px; }
+
+        .sidebar-links a {
+            color: #fff; text-decoration: none; font-size: 1.1rem; font-weight: bold;
+            padding: 12px 15px; border-radius: 10px; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .sidebar-links a:hover, .sidebar-links a.active {
+            background: rgba(212, 175, 55, 0.15); color: var(--primary);
+        }
+
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            z-index: 1500; display: none;
+        }
+
+        .overlay-bg.show { display: block; }
+
+        .header-socials { display: flex; gap: 12px; }
+
+        .social-icon-btn {
+            color: #ffffff; font-size: 1.2rem; width: 38px; height: 38px;
+            border-radius: 50%; border: 1px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.3s ease; background: rgba(0,0,0,0.5);
+        }
+
+        .social-icon-btn:hover {
+            background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* تنسيق معرض الصور */
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .page-title {
+            color: var(--primary);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .page-subtitle {
+            color: #ccc;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .gallery-img-container {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        .gallery-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-card:hover .gallery-img-container img {
+            transform: scale(1.08);
+        }
+
+        .gallery-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .gallery-info h3 {
+            color: var(--primary);
+            font-size: 1.05rem;
+        }
+
+        /* نافذة العرض الكبيرة (Lightbox) مع الإطار الذهبي وأزرار التنقل */
+        .lightbox-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            backdrop-filter: blur(8px);
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 85vw;
+            max-height: 85vh;
+            border: 4px solid var(--primary);
+            border-radius: 15px;
+            box-shadow: 0 0 35px var(--primary-glow);
+            background: #000;
+            overflow: hidden;
+        }
+
+        .lightbox-content img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            display: block;
+            object-fit: contain;
+        }
+
+        .lightbox-close, .lightbox-btn {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 3010;
+        }
+
+        .lightbox-close:hover, .lightbox-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .lightbox-close { top: 20px; right: 20px; }
+        .lightbox-prev { top: 50%; left: 20px; transform: translateY(-50%); }
+        .lightbox-next { top: 50%; right: 20px; transform: translateY(-50%); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hero"></div>
+    <div class="glow-overlay"></div>
+    <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- القائمة الجانبية -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Меню навигации</span>
+            <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-links">
+            <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+            <a href="concerts.html"><i class="fas fa-ticket-alt"></i> Концерты</a>
+            <a href="about.html"><i class="fas fa-user-star"></i> О Татьяне</a>
+            <a href="quotes.html"><i class="fas fa-quote-right"></i> Цитаты</a>
+            <a href="gallery.html" class="active"><i class="fas fa-images"></i> Галерея</a>
+            <a href="game.html"><i class="fas fa-gamepad"></i> Игры (Мини-игра)</a>
+        </div>
+    </aside>
+
+    <nav>
+        <button class="menu-toggle-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        <div class="header-socials">
+            <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title" data-aos="fade-down">Галерея памяти</h1>
+        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Нажмите на любую фотографию для просмотра в высоком разрешении</p>
+
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- الصورة 1 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(0)">
+                <div class="gallery-img-container"><img src="img1.jpg" alt="Фото 1" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (1)</h3></div>
+            </div>
+            <!-- الصورة 2 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(1)">
+                <div class="gallery-img-container"><img src="img2.jpg" alt="Фото 2" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (2)</h3></div>
+            </div>
+            <!-- الصورة 3 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(2)">
+                <div class="gallery-img-container"><img src="img3.jpg" alt="Фото 3" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (3)</h3></div>
+            </div>
+            <!-- الصورة 4 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(3)">
+                <div class="gallery-img-container"><img src="img4.jpg" alt="Фото 4" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (4)</h3></div>
+            </div>
+            <!-- الصورة 5 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(4)">
+                <div class="gallery-img-container"><img src="img5.jpg" alt="Фото 5" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (5)</h3></div>
+            </div>
+            <!-- الصورة 6 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(5)">
+                <div class="gallery-img-container"><img src="img6.jpg" alt="Фото 6" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (6)</h3></div>
+            </div>
+            <!-- الصورة 7 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(6)">
+                <div class="gallery-img-container"><img src="img7.jpg" alt="Фото 7" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (7)</h3></div>
+            </div>
+            <!-- الصورة 8 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(7)">
+                <div class="gallery-img-container"><img src="img8.jpg" alt="Фото 8" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (8)</h3></div>
+            </div>
+            <!-- الصورة 9 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(8)">
+                <div class="gallery-img-container"><img src="img9.jpg" alt="Фото 9" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (9)</h3></div>
+            </div>
+            <!-- الصورة 10 -->
+            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(9)">
+                <div class="gallery-img-container"><img src="img10.jpg" alt="Фото 10" class="gallery-source-img"></div>
+                <div class="gallery-info"><h3>Татьяна Куртукова (10)</h3></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة العرض المنبثقة (Lightbox) -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+        <button class="lightbox-btn lightbox-prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+        <div class="lightbox-content">
+            <img id="lightboxImg" src="" alt="Zoomed Image">
+        </div>
+        <button class="lightbox-btn lightbox-next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 900, once: true });
+
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('show');
+        }
+
+        const images = document.querySelectorAll('.gallery-source-img');
+        const modal = document.getElementById('lightboxModal');
+        const lightboxImg = document.getElementById('lightboxImg');
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            lightboxImg.src = images[currentIndex].src;
+            modal.classList.add('active');
+        }
+
+        function closeLightbox() {
+            modal.classList.remove('active');
+        }
+
+        function changeSlide(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = images.length - 1;
+            } else if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+            lightboxImg.src = images[currentIndex].src;
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
