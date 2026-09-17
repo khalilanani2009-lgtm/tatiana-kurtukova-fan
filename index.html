@@ -15,252 +15,135 @@
             --text-light: #ffffff;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
             font-family: 'Segoe UI', Arial, sans-serif;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* خلفية سينمائية متحركة */
         .bg-hero {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(to bottom, rgba(8,8,8,0.75), rgba(8,8,8,0.95)),
                         url('profile.jpg') center/cover no-repeat;
             z-index: -2;
             animation: zoomBg 20s infinite alternate ease-in-out;
         }
 
-        @keyframes zoomBg {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
-        }
+        @keyframes zoomBg { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
 
         .glow-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15), transparent 70%);
-            z-index: -1;
-            pointer-events: none;
+            z-index: -1; pointer-events: none;
         }
 
-        /* شريط التنقل العلوي مع زر الأسطر الثلاثة */
         nav {
             background: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--primary);
             padding: 12px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
         }
 
-        /* زر الأسطر الثلاثة (الهامبرغر) */
         .menu-toggle-btn {
             background: transparent;
             border: 1px solid var(--primary);
             color: var(--primary);
             font-size: 1.4rem;
-            width: 42px;
-            height: 42px;
+            width: 42px; height: 42px;
             border-radius: 10px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             transition: all 0.3s ease;
         }
 
         .menu-toggle-btn:hover {
-            background: var(--primary);
-            color: #000;
+            background: var(--primary); color: #000;
             box-shadow: 0 0 15px var(--primary-glow);
         }
 
-        /* القائمة الجانبية المنسدلة */
         .sidebar {
-            position: fixed;
-            top: 0;
-            left: -280px; /* مخفية جهة اليسار */
-            width: 280px;
-            height: 100%;
+            position: fixed; top: 0; left: -280px;
+            width: 280px; height: 100%;
             background: rgba(15, 15, 15, 0.98);
             backdrop-filter: blur(15px);
             border-right: 1px solid var(--primary);
             z-index: 2000;
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: left 0.4s ease;
             padding: 25px 20px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 5px 0 25px rgba(0,0,0,0.8);
+            display: flex; flex-direction: column;
         }
 
-        .sidebar.open {
-            left: 0; /* إظهار القائمة */
-        }
+        .sidebar.open { left: 0; }
 
         .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 15px; margin-bottom: 25px;
         }
 
-        .sidebar-title {
-            color: var(--primary);
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
+        .sidebar-title { color: var(--primary); font-size: 1.2rem; font-weight: bold; }
 
         .close-btn {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: color 0.3s;
+            background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;
         }
 
-        .close-btn:hover {
-            color: var(--primary);
-        }
-
-        .sidebar-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+        .sidebar-links { display: flex; flex-direction: column; gap: 15px; }
 
         .sidebar-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: bold;
-            padding: 12px 15px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid transparent;
+            color: #fff; text-decoration: none; font-size: 1.1rem; font-weight: bold;
+            padding: 12px 15px; border-radius: 10px; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 12px;
         }
 
         .sidebar-links a:hover, .sidebar-links a.active {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--primary);
-            border-color: rgba(212, 175, 55, 0.4);
-            transform: translateX(5px);
+            background: rgba(212, 175, 55, 0.15); color: var(--primary);
         }
 
-        /* خلفية معتمة عند فتح القائمة */
         .overlay-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(3px);
-            z-index: 1500;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(3px);
+            z-index: 1500; display: none;
         }
 
-        .overlay-bg.show {
-            display: block;
-            opacity: 1;
-        }
+        .overlay-bg.show { display: block; }
 
-        .header-socials {
-            display: flex;
-            gap: 12px;
-        }
+        .header-socials { display: flex; gap: 12px; }
 
         .social-icon-btn {
-            color: #ffffff;
-            font-size: 1.2rem;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            border: 1px solid var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            background: rgba(0,0,0,0.5);
+            color: #ffffff; font-size: 1.2rem; width: 38px; height: 38px;
+            border-radius: 50%; border: 1px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.3s ease; background: rgba(0,0,0,0.5);
         }
 
         .social-icon-btn:hover {
-            background: var(--primary);
-            color: #000000;
-            box-shadow: 0 0 15px var(--primary);
-            transform: scale(1.1);
+            background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary);
         }
 
-        /* شريط الأخبار المتحرك */
         .news-ticker {
             background: rgba(212, 175, 55, 0.15);
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--primary);
-            padding: 8px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            font-size: 0.9rem;
-            font-weight: bold;
+            color: var(--primary); padding: 8px 0; overflow: hidden;
+            white-space: nowrap; font-size: 0.9rem; font-weight: bold;
         }
 
-        .news-ticker-content {
-            display: inline-block;
-            animation: ticker 25s linear infinite;
-        }
+        .news-ticker-content { display: inline-block; animation: ticker 25s linear infinite; }
 
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        header {
-            text-align: center;
-            padding: 40px 20px 20px;
-        }
+        header { text-align: center; padding: 40px 20px 20px; }
 
-        /* الصورة الدائرية المتوهجة */
         .avatar-glow {
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 30px var(--primary-glow);
-            animation: pulse 3s infinite alternate ease-in-out;
-            object-fit: cover;
-            transition: transform 0.4s ease;
+            width: 170px; height: 170px; border-radius: 50%;
+            border: 3px solid var(--primary); box-shadow: 0 0 30px var(--primary-glow);
+            animation: pulse 3s infinite alternate ease-in-out; object-fit: cover;
             margin-bottom: 15px;
-        }
-
-        .avatar-glow:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.9);
         }
 
         @keyframes pulse {
@@ -268,201 +151,105 @@
             100% { transform: scale(1.06); box-shadow: 0 0 45px rgba(212, 175, 55, 0.85); }
         }
 
-        h1 {
-            color: var(--primary);
-            margin: 10px 0 5px;
-            font-size: 2.6rem;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
+        h1 { color: var(--primary); margin: 10px 0 5px; font-size: 2.6rem; letter-spacing: 2px; }
 
-        .subtitle {
-            color: #ddd;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
+        .subtitle { color: #ddd; font-size: 1.1rem; margin-bottom: 10px; }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
 
         .card {
             background: var(--card-bg);
             border: 1px solid rgba(212, 175, 55, 0.35);
-            border-radius: 20px;
-            padding: 28px;
-            margin-bottom: 30px;
-            text-align: center;
-            backdrop-filter: blur(8px);
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            border-radius: 20px; padding: 28px; margin-bottom: 30px;
+            text-align: center; backdrop-filter: blur(8px);
         }
 
         .section-title {
-            color: var(--primary);
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            color: var(--primary); font-size: 1.4rem; font-weight: bold; margin-bottom: 18px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
 
-        .timer-display {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #fff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-        }
+        .timer-display { font-size: 2rem; font-weight: bold; color: #fff; letter-spacing: 2px; }
 
         .btn-ticket {
-            display: inline-block;
-            background: linear-gradient(45deg, #d4af37, #aa820a);
-            color: #000;
-            padding: 12px 28px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: all 0.3s ease;
+            display: inline-block; background: linear-gradient(45deg, #d4af37, #aa820a);
+            color: #000; padding: 12px 28px; border-radius: 25px;
+            text-decoration: none; font-weight: bold; margin-top: 15px;
         }
 
-        .btn-ticket:hover {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.9);
-            transform: scale(1.05);
-        }
-
-        /* معرض الصور المتحرك */
+        /* معرض الصور */
         .slideshow-container {
-            position: relative;
-            max-width: 100%;
-            height: 420px;
-            margin: auto;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            position: relative; max-width: 100%; height: 420px; margin: auto;
+            border-radius: 16px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.4);
         }
 
-        .mySlides {
-            display: none;
-            height: 100%;
-            width: 100%;
-        }
+        .mySlides { display: none; height: 100%; width: 100%; }
+        .mySlides img { width: 100%; height: 100%; object-fit: cover; }
 
-        .mySlides img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
-        }
-
-        .fade {
-            animation-name: fade;
-            animation-duration: 1.2s;
-        }
-
-        @keyframes fade {
-            from { opacity: 0.4; transform: scale(1.03); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        .fade { animation-name: fade; animation-duration: 1.2s; }
+        @keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
 
         .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 12px 18px;
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.3s ease;
-            border-radius: 50%;
-            user-select: none;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--primary);
+            cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%);
+            padding: 12px 18px; color: var(--primary); font-weight: bold; font-size: 18px;
+            background: rgba(0, 0, 0, 0.6); border: 1px solid var(--primary); border-radius: 50%;
         }
 
-        .next { right: 15px; }
-        .prev { left: 15px; }
+        .next { right: 15px; } .prev { left: 15px; }
 
-        .prev:hover, .next:hover {
-            background-color: var(--primary);
-            color: #000;
-            box-shadow: 0 0 15px var(--primary);
-        }
-
-        .dots-container {
-            text-align: center;
-            margin-top: 15px;
-        }
+        .dots-container { text-align: center; margin-top: 15px; }
 
         .dot {
-            cursor: pointer;
-            height: 10px;
-            width: 10px;
-            margin: 0 4px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.4s ease, transform 0.4s ease;
+            cursor: pointer; height: 10px; width: 10px; margin: 0 4px;
+            background-color: rgba(255, 255, 255, 0.3); border-radius: 50%; display: inline-block;
         }
 
-        .dot.active, .dot:hover {
-            background-color: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-            transform: scale(1.3);
+        .dot.active { background-color: var(--primary); transform: scale(1.3); }
+
+        /* نموذج إدخال المتابعين واللوحة */
+        .fan-form {
+            display: flex; flex-direction: column; gap: 12px;
+            max-width: 450px; margin: 0 auto 20px;
         }
 
-        /* شبكة الأغاني الشهيرة */
-        .hits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
+        .fan-input {
+            padding: 12px 16px; border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            background: rgba(0, 0, 0, 0.6); color: #fff;
+            font-size: 1rem; outline: none; text-align: center;
         }
 
-        .hit-item {
-            background: rgba(30, 30, 30, 0.8);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
+        .fan-input:focus { border-color: var(--primary); }
+
+        .btn-submit {
+            background: linear-gradient(45deg, #d4af37, #aa820a);
+            color: #000; padding: 12px; border: none; border-radius: 10px;
+            font-weight: bold; cursor: pointer; transition: transform 0.2s;
         }
 
-        .hit-item:hover {
-            border-color: var(--primary);
-            transform: scale(1.03);
+        .btn-submit:hover { transform: scale(1.03); }
+
+        .fans-list {
+            max-height: 220px; overflow-y: auto; display: flex;
+            flex-direction: column; gap: 8px; margin-top: 15px;
         }
 
-        .hit-title {
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
+        .fan-card {
+            background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--primary);
+            padding: 10px 15px; border-radius: 6px; display: flex; justify-content: space-between;
         }
+
+        .fan-name { font-weight: bold; color: #fff; }
+        .fan-city { color: var(--primary); font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <div class="bg-hero"></div>
     <div class="glow-overlay"></div>
-
-    <!-- الخلفية المعتمة للقائمة الجانبية -->
     <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
 
-    <!-- القائمة الجانبية المنسدلة -->
+    <!-- القائمة الجانبية -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="sidebar-title">Меню навигации</span>
@@ -476,18 +263,10 @@
     </aside>
 
     <nav>
-        <!-- زر فتح القائمة الجانبية (3 أسطر) -->
-        <button class="menu-toggle-btn" onclick="toggleMenu()" title="Открыть меню">
-            <i class="fas fa-bars"></i>
-        </button>
-        
+        <button class="menu-toggle-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
         <div class="header-socials">
-            <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn" title="TikTok">
-                <i class="fab fa-tiktok"></i>
-            </a>
+            <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@tatyana._.kurtukova?lang=ar" target="_blank" class="social-icon-btn"><i class="fab fa-tiktok"></i></a>
         </div>
     </nav>
 
@@ -497,7 +276,6 @@
         </div>
     </div>
 
-    <!-- الهيدر والصورة الدائرية المتوهجة -->
     <header data-aos="fade-down">
         <img class="avatar-glow" src="profile.jpg" alt="Татьяна Куртукова">
         <h1>Татьяна Куртукова</h1>
@@ -512,25 +290,16 @@
             <a href="concerts.html" class="btn-ticket">Купить билет на концерт</a>
         </div>
 
-        <!-- معرض الصور المتحرك تلقائياً -->
+        <!-- معرض الصور -->
         <div class="card" data-aos="fade-up" data-aos-delay="100">
             <div class="section-title"><i class="fas fa-images"></i> Галерея Татьяны</div>
-            
             <div class="slideshow-container">
-                <div class="mySlides fade">
-                    <img src="photo1.jpg" alt="Татьяна Куртукова">
-                </div>
-                <div class="mySlides fade">
-                    <img src="photo2.jpg" alt="Татьяна Куртукова">
-                </div>
-                <div class="mySlides fade">
-                    <img src="photo3.jpg" alt="Татьяна Куртукова">
-                </div>
-
+                <div class="mySlides fade"><img src="photo1.jpg" alt="Татьяна Куртукова"></div>
+                <div class="mySlides fade"><img src="photo2.jpg" alt="Татьяна Куртукова"></div>
+                <div class="mySlides fade"><img src="photo3.jpg" alt="Татьяна Куртукова"></div>
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
             </div>
-
             <div class="dots-container">
                 <span class="dot" onclick="currentSlide(1)"></span>
                 <span class="dot" onclick="currentSlide(2)"></span>
@@ -538,23 +307,18 @@
             </div>
         </div>
 
-        <!-- شبكة الأغاني الشهيرة -->
+        <!-- لوحة تسجيل اسم المتابع ومدينته -->
         <div class="card" data-aos="fade-up" data-aos-delay="200">
-            <div class="section-title"><i class="fas fa-star"></i> Главные Хиты</div>
-            <div class="hits-grid">
-                <div class="hit-item">
-                    <div class="hit-title">«Матушка»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Главный хит страны</p>
-                </div>
-                <div class="hit-item">
-                    <div class="hit-title">«Ромашка-Ромашка»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Душевный фолк-хит</p>
-                </div>
-                <div class="hit-item">
-                    <div class="hit-title">«Русская зима»</div>
-                    <p style="font-size: 0.85rem; color: #bbb;">Невероятная атмосфера</p>
-                </div>
-            </div>
+            <div class="section-title"><i class="fas fa-map-marked-alt"></i> География поклонников</div>
+            <p style="margin-bottom:15px; color:#ccc; font-size: 0.95rem;">Напишите свое имя и город, чтобы остаться на карте поклонников!</p>
+            
+            <form class="fan-form" id="fanForm">
+                <input type="text" id="fanName" class="fan-input" placeholder="Ваше имя" required>
+                <input type="text" id="fanCity" class="fan-input" placeholder="Ваш город" required>
+                <button type="submit" class="btn-submit">Добавить себя</button>
+            </form>
+
+            <div class="fans-list" id="fansContainer"></div>
         </div>
     </div>
 
@@ -562,16 +326,14 @@
     <script>
         AOS.init({ duration: 900, once: true });
 
-        // التبديل القائمة الجانبية
         function toggleMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('show');
         }
 
+        // العداد
         var countDownDate = new Date("Oct 8, 2026 19:00:00").getTime();
-        var x = setInterval(function() {
+        setInterval(function() {
             var now = new Date().getTime();
             var distance = countDownDate - now;
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -581,22 +343,18 @@
             document.getElementById("timer").innerHTML = days + "д " + hours + "ч " + minutes + "м " + seconds + "с";
         }, 1000);
 
+        // المعرض
         let slideIndex = 0;
         let slideTimer;
-
         showSlidesAuto();
 
         function showSlidesAuto() {
             let slides = document.getElementsByClassName("mySlides");
             let dots = document.getElementsByClassName("dot");
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
+            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
             slideIndex++;
             if (slideIndex > slides.length) {slideIndex = 1}    
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
+            for (let i = 0; i < dots.length; i++) { dots[i].className = dots[i].className.replace(" active", ""); }
             if(slides[slideIndex-1]) {
                 slides[slideIndex-1].style.display = "block";  
                 dots[slideIndex-1].className += " active";
@@ -604,31 +362,53 @@
             slideTimer = setTimeout(showSlidesAuto, 3500);
         }
 
-        function plusSlides(n) {
-            clearTimeout(slideTimer);
-            showSlideManual(slideIndex += n);
-        }
-
-        function currentSlide(n) {
-            clearTimeout(slideTimer);
-            showSlideManual(slideIndex = n);
-        }
+        function plusSlides(n) { clearTimeout(slideTimer); showSlideManual(slideIndex += n); }
+        function currentSlide(n) { clearTimeout(slideTimer); showSlideManual(slideIndex = n); }
 
         function showSlideManual(n) {
             let slides = document.getElementsByClassName("mySlides");
             let dots = document.getElementsByClassName("dot");
             if (n > slides.length) {slideIndex = 1}
             if (n < 1) {slideIndex = slides.length}
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
+            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            for (let i = 0; i < dots.length; i++) { dots[i].className = dots[i].className.replace(" active", ""); }
             slides[slideIndex-1].style.display = "block";  
             dots[slideIndex-1].className += " active";
             slideTimer = setTimeout(showSlidesAuto, 3500);
         }
+
+        // إدارة أسماء المتابعين
+        const fanForm = document.getElementById('fanForm');
+        const fansContainer = document.getElementById('fansContainer');
+
+        function loadFans() {
+            const fans = JSON.parse(localStorage.getItem('mySiteFans')) || [];
+            fansContainer.innerHTML = '';
+            fans.forEach(fan => {
+                fansContainer.innerHTML += `
+                    <div class="fan-card">
+                        <span class="fan-name">${fan.name}</span>
+                        <span class="fan-city"><i class="fas fa-map-marker-alt"></i> ${fan.city}</span>
+                    </div>
+                `;
+            });
+        }
+
+        fanForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('fanName').value;
+            const city = document.getElementById('fanCity').value;
+
+            const fans = JSON.parse(localStorage.getItem('mySiteFans')) || [];
+            fans.unshift({ name, city });
+            localStorage.setItem('mySiteFans', JSON.stringify(fans));
+
+            document.getElementById('fanName').value = '';
+            document.getElementById('fanCity').value = '';
+            loadFans();
+        });
+
+        loadFans();
     </script>
 </body>
 </html>
