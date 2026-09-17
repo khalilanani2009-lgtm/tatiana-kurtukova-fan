@@ -3,32 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Татьяна Куртукова — Главная</title>
+    <title>Татьяна Куртукова — Официальное фан-сообщество</title>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
             --primary: #d4af37;
-            --primary-glow: rgba(212, 175, 55, 0.5);
+            --primary-glow: rgba(212, 175, 55, 0.6);
             --bg-dark: #080808;
-            --card-bg: #121212;
+            --card-bg: rgba(18, 18, 18, 0.85);
             --text-light: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
             font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* شريط التنقل العلوي مع الأيقونات */
+        /* خلفية سينمائية متحركة مع صورة تاتيانا */
+        .bg-hero {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(8,8,8,0.7), rgba(8,8,8,0.95)),
+                        url('https://static.tildacdn.com/tild3662-3863-4433-a339-333534666563/IMG_4562.JPG') center/cover no-repeat;
+            z-index: -2;
+            animation: zoomBg 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes zoomBg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        /* إضاءة توهج خلفية */
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15), transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* شريط التنقل العلوي */
         nav {
-            background: #111111;
+            background: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--primary);
-            padding: 12px 20px;
+            padding: 12px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -40,17 +76,17 @@
         .nav-links a {
             color: #ffffff;
             text-decoration: none;
-            margin: 0 12px;
+            margin: 0 15px;
             font-weight: bold;
-            font-size: 0.95rem;
+            font-size: 1rem;
             transition: color 0.3s;
         }
 
         .nav-links a:hover, .nav-links a.active {
             color: var(--primary);
+            text-shadow: 0 0 8px var(--primary-glow);
         }
 
-        /* أيقونات إنستغرام وتيك توك الصغيرة في الأعلى */
         .header-socials {
             display: flex;
             gap: 12px;
@@ -59,8 +95,8 @@
         .social-icon-btn {
             color: #ffffff;
             font-size: 1.2rem;
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             border: 1px solid var(--primary);
             display: flex;
@@ -68,64 +104,167 @@
             justify-content: center;
             text-decoration: none;
             transition: all 0.3s ease;
+            background: rgba(0,0,0,0.5);
         }
 
         .social-icon-btn:hover {
             background: var(--primary);
             color: #000000;
-            box-shadow: 0 0 10px var(--primary);
+            box-shadow: 0 0 15px var(--primary);
             transform: scale(1.1);
+        }
+
+        /* شريط التمرير الأخبار المتحرك */
+        .news-ticker {
+            background: rgba(212, 175, 55, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--primary);
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .news-ticker-content {
+            display: inline-block;
+            animation: ticker 25s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
         header {
             text-align: center;
-            padding: 40px 20px 20px;
-            background: radial-gradient(circle at center, rgba(212,175,55,0.18) 0%, rgba(8,8,8,1) 80%);
+            padding: 50px 20px 30px;
         }
 
         .avatar-glow {
-            width: 170px;
-            height: 170px;
+            width: 190px;
+            height: 190px;
             border-radius: 50%;
             border: 3px solid var(--primary);
-            box-shadow: 0 0 30px var(--primary-glow);
-            animation: pulse 2.8s infinite alternate ease-in-out;
+            box-shadow: 0 0 35px var(--primary-glow);
+            animation: pulse 3s infinite alternate ease-in-out;
             object-fit: cover;
             transition: transform 0.4s ease;
         }
 
         .avatar-glow:hover {
             transform: scale(1.08) rotate(1deg);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.9);
+            box-shadow: 0 0 55px rgba(212, 175, 55, 0.9);
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
-            100% { transform: scale(1.06); box-shadow: 0 0 40px rgba(212, 175, 55, 0.8); }
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+            100% { transform: scale(1.06); box-shadow: 0 0 45px rgba(212, 175, 55, 0.85); }
         }
 
-        h1 { color: var(--primary); margin: 15px 0 5px; font-size: 2.2rem; letter-spacing: 1px; }
-        .subtitle { color: #aaa; font-size: 1rem; margin-bottom: 10px; }
+        h1 {
+            color: var(--primary);
+            margin: 20px 0 5px;
+            font-size: 2.6rem;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
 
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .subtitle {
+            color: #ddd;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
         .card {
             background: var(--card-bg);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 30px;
             text-align: center;
-            transition: transform 0.3s, border-color 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
         }
 
-        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
 
-        .section-title { color: var(--primary); font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; }
-        .timer-display { font-size: 1.8rem; font-weight: bold; color: #fff; letter-spacing: 2px; }
+        .section-title {
+            color: var(--primary);
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
 
-        /* مشغل الصوت */
+        .timer-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        /* شبكة الأغاني */
+        .hits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .hit-item {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .hit-item:hover {
+            border-color: var(--primary);
+            transform: scale(1.03);
+        }
+
+        .hit-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .btn-ticket {
+            display: inline-block;
+            background: linear-gradient(45deg, #d4af37, #aa820a);
+            color: #000;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ticket:hover {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.9);
+            transform: scale(1.05);
+        }
+
         audio {
             width: 100%;
             margin-top: 15px;
@@ -135,6 +274,11 @@
 </head>
 <body>
 
+    <!-- الخلفية المتحركة -->
+    <div class="bg-hero"></div>
+    <div class="glow-overlay"></div>
+
+    <!-- شريط التنقل -->
     <nav>
         <div class="nav-links">
             <a href="index.html" class="active">Главная</a>
@@ -142,7 +286,6 @@
             <a href="about.html">О Татьяне</a>
         </div>
         
-        <!-- أيقونات السوشيال ميديا في أعلى الصفحة -->
         <div class="header-socials">
             <a href="https://www.instagram.com/tatyana.kurtukova.fan/?hl=ar" target="_blank" class="social-icon-btn" title="Instagram">
                 <i class="fab fa-instagram"></i>
@@ -153,28 +296,55 @@
         </div>
     </nav>
 
+    <!-- شريط الأخبار المتحرك -->
+    <div class="news-ticker">
+        <div class="news-ticker-content">
+            ✨ Добро пожаловать на официальный фан-сайт Татьяны Куртуковой! &nbsp;&nbsp;&nbsp; 📅 Сольные концерты: Ярославль (8 октября) | Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже на тур «Матушка-Земля»!
+        </div>
+    </div>
+
+    <!-- الهيدر والصورة الرئيسية -->
     <header data-aos="fade-down">
         <img class="avatar-glow" src="https://static.tildacdn.com/tild3662-3863-4433-a339-333534666563/IMG_4562.JPG" alt="Татьяна Куртукова">
         <h1>Татьяна Куртукова</h1>
-        <div class="subtitle">Фан-сообщество</div>
+        <div class="subtitle">Фан-сообщество & Творчество</div>
     </header>
 
     <div class="container">
         <!-- العداد التنازلي -->
         <div class="card" data-aos="fade-up">
-            <div class="section-title">⏳ До сольного концерта в Ярославле (8 октября):</div>
+            <div class="section-title"><i class="fas fa-hourglass-half"></i> До ближайшего сольного концерта (Ярославль):</div>
             <div class="timer-display" id="timer">Загрузка...</div>
+            <a href="concerts.html" class="btn-ticket">Купить билет на концерт</a>
         </div>
 
-        <!-- مشغل الأغنية الشغال -->
+        <!-- مشغل الصوت الرئيسي -->
         <div class="card" data-aos="fade-up" data-aos-delay="100">
-            <div class="section-title">🎶 Главный хит «Матушка»</div>
-            <p style="color: #ccc; font-size: 0.95rem;">Слушайте трек прямо на сайте:</p>
+            <div class="section-title"><i class="fas fa-music"></i> Главный хит «Матушка»</div>
+            <p style="color: #ccc; font-size: 0.95rem;">Слушайте официальный трек прямо здесь:</p>
             <audio controls preload="auto">
                 <source src="https://mp3zen.net/files/songs/Tatiana_Kurtukova_-_Matushka.mp3" type="audio/mpeg">
-                <source src="https://zvuk.top/dl/song/38159" type="audio/mpeg">
                 Ваш браузер не поддерживает аудиоплеер.
             </audio>
+        </div>
+
+        <!-- شبكة الأعمال والتألق -->
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <div class="section-title"><i class="fas fa-star"></i> Хиты и Любимые Песни</div>
+            <div class="hits-grid">
+                <div class="hit-item">
+                    <div class="hit-title">«Матушка»</div>
+                    <p style="font-size: 0.85rem; color: #bbb;">Главная визитная карточка</p>
+                </div>
+                <div class="hit-item">
+                    <div class="hit-title">«Ромашка-Ромашка»</div>
+                    <p style="font-size: 0.85rem; color: #bbb;">Душевный фолк-хит</p>
+                </div>
+                <div class="hit-item">
+                    <div class="hit-title">«Русская зима»</div>
+                    <p style="font-size: 0.85rem; color: #bbb;">Невероятная атмосфера</p>
+                </div>
+            </div>
         </div>
     </div>
 
