@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
-            --primary: #4a90e2;          /* الأزرق الملكي */
+            --primary: #4a90e2;          /* Королевский синий */
             --primary-glow: rgba(74, 144, 226, 0.6);
-            --bg-dark: #0a0f1d;          /* خلفية داكنة عميقة متناسقة */
+            --bg-dark: #0a0f1d;          /* Глубокий темный фон */
             --card-bg: rgba(15, 23, 42, 0.92);
             --text-light: #ffffff;
-            --accent-silver: #e2e8f0;    /* الفضي المضيء */
+            --accent-silver: #e2e8f0;    /* Светящийся серебряный */
             --danger: #ef4444;
             --success: #22c55e;
             --warning: #f59e0b;
@@ -48,7 +48,7 @@
             z-index: -1; pointer-events: none;
         }
 
-        /* شريط الأخبار المتحرك */
+        /* Бегущая новостная строка */
         .news-ticker {
             background: rgba(74, 144, 226, 0.15);
             border-bottom: 1px solid rgba(74, 144, 226, 0.3);
@@ -154,7 +154,6 @@
             text-align: center; color: #94a3b8; margin-bottom: 25px; font-size: 1.05rem;
         }
 
-        /* لوحة معلومات اللعبة الأسطورية */
         .quiz-stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -186,7 +185,6 @@
             font-size: 1.1rem;
         }
 
-        /* شريط الوقت المتوهج */
         .timer-bar-container {
             width: 100%;
             height: 6px;
@@ -250,7 +248,6 @@
             box-shadow: 0 0 15px var(--primary-glow);
         }
 
-        /* أدوات المساعدة والفعاليات الجانبية داخل الكارد */
         .game-tools {
             display: flex;
             justify-content: space-between;
@@ -288,7 +285,6 @@
             cursor: not-allowed;
         }
 
-        /* مربع التعليق التحفيزي */
         .feedback-box {
             margin-top: 20px;
             padding: 14px;
@@ -361,7 +357,6 @@
             transform: scale(1.05);
         }
 
-        /* تأثيرات النجوم والاحتفال */
         .confetti-particle {
             position: fixed;
             width: 10px;
@@ -386,7 +381,7 @@
     <div class="glow-overlay"></div>
     <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
 
-    <!-- القائمة الجانبية المتكاملة -->
+    <!-- Навигационное боковое меню -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="sidebar-title">Меню навигации</span>
@@ -410,7 +405,7 @@
         </div>
     </nav>
 
-    <!-- شريط الأخبار المتحرك -->
+    <!-- Бегущая новостная строка -->
     <div class="news-ticker">
         <div class="news-ticker-content">
             ✨ Проверь себя в грандиозной викторине о Татьяне Куртуковой &nbsp;&nbsp;&nbsp; 📅 Сольные концерты: Ярославль (8 октября) и Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже!
@@ -422,7 +417,6 @@
         <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Пройдите уникальный интерактивный вызов и докажите, что вы главный знаток творчества певицы!</p>
 
         <div class="quiz-card" data-aos="fade-up">
-            <!-- شريط المعلومات الأسطوري الجديد -->
             <div class="quiz-stats" id="quizStats">
                 <div class="stat-item">
                     <span>Вопрос</span>
@@ -442,7 +436,6 @@
                 </div>
             </div>
 
-            <!-- شريط الوقت التنازلي -->
             <div class="timer-bar-container" id="timerContainer">
                 <div class="timer-bar" id="timerBar"></div>
             </div>
@@ -451,10 +444,9 @@
                 <div class="question-text" id="questionText">Загрузка эпического контента...</div>
                 <div class="options-grid" id="optionsGrid"></div>
                 
-                <!-- أدوات مساعدة وفعاليات فريدة داخل الكارد -->
                 <div class="game-tools">
-                    <button class="btn-lifeline" id="fiftyBtn" onclick="useFiftyFifty()"><i class="fas fa-magic"></i> حذف إجابتين (50/50)</button>
-                    <span style="color: #94a3b8; font-size: 0.85rem;"><i class="fas fa-info-circle"></i> اختر الإجابة بدقة لرفع مستوى الكمбо!</span>
+                    <button class="btn-lifeline" id="fiftyBtn" onclick="useFiftyFifty()"><i class="fas fa-magic"></i> 50/50 (Убрать 2 ответа)</button>
+                    <span style="color: #94a3b8; font-size: 0.85rem;"><i class="fas fa-info-circle"></i> Отвечайте точно, чтобы повысить комбо!</span>
                 </div>
 
                 <div class="feedback-box" id="feedbackBox"></div>
@@ -479,7 +471,6 @@
             document.getElementById('overlay').classList.toggle('show');
         }
 
-        /* بنك الأسئلة الموسع والأسطوري الشامل لكل تفاصيل تاتيانا ومواعيدها */
         const questions = [
             {
                 question: "Какая всенародно известная песня Татьяны Куртуковой стала её визитной карточкой?",
@@ -620,7 +611,7 @@
             });
 
             feedbackBox.className = 'feedback-box wrong';
-            feedbackBox.innerHTML = `<i class="fas fa-clock"></i> انتهى الوقت! خسرت قلباً. الإجابة الصحيحة كانت موصوفة في الخيار الأخضر.`;
+            feedbackBox.innerHTML = `<i class="fas fa-clock"></i> Время вышло! Вы потеряли жизнь. Правильный вариант выделен зеленым цветом.`;
             feedbackBox.style.display = 'block';
 
             setTimeout(nextStepCheck, 2500);
@@ -662,7 +653,7 @@
             document.getElementById('fiftyBtn').disabled = true;
 
             if (idx === q.correct) {
-                score += 10 + (streak * 2); // مكافأة الكمбо
+                score += 10 + (streak * 2); // Бонус за комбо
                 streak++;
                 selectedBtn.style.background = 'rgba(34, 197, 94, 0.3)';
                 selectedBtn.style.borderColor = 'var(--success)';
@@ -706,7 +697,6 @@
             }
         }
 
-        /* ميزة مساعدة فريدة: حذف إجابتين خطأ */
         function useFiftyFifty() {
             if (isAnswered) return;
             document.getElementById('fiftyBtn').disabled = true;
@@ -732,24 +722,24 @@
             
             const resultBox = document.getElementById('resultBox');
             resultBox.style.display = 'block';
-            document.getElementById('scoreDisplay').innerText = `${score} نقطة`;
+            document.getElementById('scoreDisplay').innerText = `${score} очков`;
 
             let rank = "";
             let comment = "";
 
             if (isGameOver) {
-                rank = "⚡ المحاول الشجاع";
-                comment = "😅 نفدت قلوبك الثلاثة! استعرض محتوى الموقع وتعرف أكثر على تاتيانا ثم حاول مجدداً لتحقيق اللقب الأسطوري!";
+                rank = "⚡ Смелый Испытатель";
+                comment = "😅 Ваши три жизни исчерпаны! Изучите материалы сайта и узнайте больше о Татьяне, затем попробуйте снова!";
             } else if (score >= 120) {
-                rank = "👑 الأسطورة الخارقة (الخبير المطلق)";
-                comment = "🏆 مذهل للغاية! أنت لست مجرد معجب، بل حافظ الأسرار والملهم الأول لصفحة تاتيانا كورتوكوفا!";
+                rank = "👑 Супер-Легенда (Абсолютный Эксперт)";
+                comment = "🏆 Потрясающе! Вы не просто поклонник, вы — хранитель секретов и главный вдохновитель фан-страницы Татьяны Куртуковой!";
                 triggerConfetti();
             } else if (score >= 70) {
-                rank = "🌟 خبير معجبين ملكي";
-                comment = "🎵 نتيجة ممتازة للغاية! إحاطتك بمواعيد الحفلات وأغاني تاتيانا تثير الإعجاب حقاً!";
+                rank = "🌟 Звездный Знаток";
+                comment = "🎵 Отличный результат! Ваша осведомленность о концертах и песнях Татьяны действительно впечатляет!";
             } else {
-                rank = "🎵 محب مبتدئ متألق";
-                comment = "💡 بداية رائعة! جولة «Матушка-Земля» مليئة بالمفاجآت، استكشف الأقسام الأخرى وعد لتسجيل رقم قياسي أعلى!";
+                rank = "🎵 Начинающий Преданный Слушатель";
+                comment = "💡 Отличное начало! Тур «Матушка-Земля» полон сюрпризов, изучите другие разделы сайта и вернитесь за новым рекордом!";
             }
 
             document.getElementById('rankBadge').innerText = rank;
@@ -769,7 +759,6 @@
             loadQuestion();
         }
 
-        /* تأثير احتفالي بالنجوم والقصاصات عند الفوز الأسطوري */
         function triggerConfetti() {
             for (let i = 0; i < 70; i++) {
                 const particle = document.createElement('div');
@@ -777,9 +766,8 @@
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.backgroundColor = ['#4a90e2', '#f59e0b', '#22c55e', '#a855f7', '#ffffff'][Math.floor(Math.random() * 5)];
                 particle.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
-                particle.style.animationDelay = (Math.random() * 0.5) + 's';
                 document.body.appendChild(particle);
-                setTimeout(() => particle.remove(), 3500);
+                setTimeout(() => particle.remove(), 4000);
             }
         }
 
