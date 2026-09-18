@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Цитаты и Вдохновение — Татьяна Куртукова</title>
+    <title>Цитаты и Вдохновение — Татьяна Куртукова (Официальное фан-сообщество)</title>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
@@ -12,9 +12,10 @@
             --primary-glow: rgba(56, 189, 248, 0.4);
             --silver: #cbd5e1;
             --bg-dark: #090d16;
-            --card-bg: rgba(15, 23, 42, 0.75);
+            --card-bg: rgba(15, 23, 42, 0.85);
             --text-light: #f8fafc;
             --accent-gold: #7dd3fc;
+            --neon-border: rgba(56, 189, 248, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,7 +33,7 @@
         .bg-hero {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(to bottom, rgba(9,13,22,0.85), rgba(9,13,22,0.95)),
+            background: linear-gradient(to bottom, rgba(9,13,22,0.85), rgba(9,13,22,0.96)),
                         url('profile.jpg') center/cover no-repeat;
             z-index: -2;
             animation: zoomBg 25s infinite alternate ease-in-out;
@@ -42,7 +43,7 @@
 
         .glow-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.12), transparent 75%);
+            background: radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.15), transparent 75%);
             z-index: -1; pointer-events: none;
         }
 
@@ -50,7 +51,7 @@
         .news-ticker {
             background: rgba(56, 189, 248, 0.1);
             border-bottom: 1px solid rgba(56, 189, 248, 0.25);
-            color: var(--silver); padding: 8px 0; overflow: hidden;
+            color: var(--silver); padding: 9px 0; overflow: hidden;
             white-space: nowrap; font-size: 0.9rem; font-weight: 500;
         }
 
@@ -63,7 +64,7 @@
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+            border-bottom: 1px solid var(--neon-border);
             padding: 12px 25px;
             display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 1000;
@@ -83,7 +84,7 @@
 
         .menu-toggle-btn:hover {
             background: var(--primary); color: #090d16;
-            box-shadow: 0 0 15px var(--primary-glow);
+            box-shadow: 0 0 20px var(--primary-glow);
         }
 
         .sidebar {
@@ -92,7 +93,7 @@
             background: rgba(11, 17, 32, 0.98);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(56, 189, 248, 0.3);
+            border-right: 1px solid var(--neon-border);
             z-index: 2000;
             transition: left 0.4s ease;
             padding: 25px 20px;
@@ -151,9 +152,9 @@
 
         /* تنسيق محتوى الاقتباسات */
         .container {
-            max-width: 800px;
+            max-width: 850px;
             margin: auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -164,28 +165,35 @@
 
         .page-title {
             color: var(--primary);
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            text-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+            font-weight: 800;
+        }
+
+        .page-subtitle {
+            color: var(--silver);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
         }
 
         .quote-card {
             background: var(--card-bg);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 20px;
-            padding: 40px 30px;
+            border: 1px solid var(--neon-border);
+            border-radius: 24px;
+            padding: 50px 40px 40px 40px;
             width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            backdrop-filter: blur(15px);
             position: relative;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .quote-card:hover {
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 12px 35px rgba(56, 189, 248, 0.15);
+            border-color: rgba(56, 189, 248, 0.6);
+            box-shadow: 0 20px 50px rgba(56, 189, 248, 0.2);
+            transform: translateY(-4px);
         }
 
         .quote-card::before {
@@ -193,34 +201,46 @@
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             position: absolute;
-            top: -15px;
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--bg-dark);
+            background: #0b1120;
             color: var(--primary);
-            padding: 0 15px;
-            font-size: 1.5rem;
+            padding: 0 20px;
+            font-size: 1.8rem;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
         }
 
         .quote-text {
-            color: var(--silver);
-            font-size: 1.3rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
+            color: var(--text-light);
+            font-size: 1.4rem;
+            line-height: 1.9;
+            margin-bottom: 25px;
             font-style: italic;
         }
 
         .quote-author {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
+            color: var(--accent-gold);
+            font-size: 1.05rem;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
-        .next-quote-btn {
+        /* أزرار التفاعل تحت الاقتباس */
+        .quote-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
             background: transparent;
             border: 2px solid var(--primary);
             color: var(--primary);
-            padding: 12px 25px;
+            padding: 12px 28px;
             font-size: 1.05rem;
             font-weight: bold;
             border-radius: 30px;
@@ -229,14 +249,49 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
         }
 
-        .next-quote-btn:hover {
+        .action-btn:hover {
             background: var(--primary);
             color: #090d16;
-            box-shadow: 0 0 20px var(--primary-glow);
+            box-shadow: 0 0 25px var(--primary-glow);
             transform: translateY(-2px);
+        }
+
+        .copy-btn {
+            border-color: rgba(125, 211, 252, 0.5);
+            color: var(--silver);
+        }
+
+        .copy-btn:hover {
+            background: rgba(125, 211, 252, 0.2);
+            color: var(--text-light);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(125, 211, 252, 0.3);
+        }
+
+        /* إشعار النسخ الناجح */
+        .copy-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(56, 189, 248, 0.95);
+            color: #090d16;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.4);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-toast.show {
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
@@ -246,7 +301,7 @@
     <div class="glow-overlay"></div>
     <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
 
-    <!-- القائمة الجانبية المحدثة والمتكاملة -->
+    <!-- القائمة الجانبية -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="sidebar-title">Меню навигации</span>
@@ -273,23 +328,34 @@
     <!-- شريط الأخبار المتحرك -->
     <div class="news-ticker">
         <div class="news-ticker-content">
-            ✨ Цитаты и мудрость Татьяны Куртуковой &nbsp;&nbsp;&nbsp; 📅 Сольные концерты: Ярославль (8 октября) | Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже!
+            ✨ Мудрость и вдохновение Татьяны Куртуковой &nbsp;&nbsp;&nbsp; 📅 Сольные концерты: Ярославль (8 октября) | Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже!
         </div>
     </div>
 
     <div class="container">
         <h1 class="page-title" data-aos="fade-down">Вдохновение и Мудрость</h1>
+        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Глубокие слова и мысли о музыке, культуре и любви к родной земле</p>
         
         <div class="quote-card" data-aos="zoom-in">
             <p class="quote-text" id="quoteDisplay">
                 «Музыка — это не просто звуки. Это невидимый мост между прошлым и будущим, соединяющий поколения через вечную память народа.»
             </p>
-            <span class="quote-author">— Татьяна Куртукова</span>
+            <span class="quote-author" id="authorDisplay">— Татьяна Куртукова</span>
         </div>
 
-        <button class="next-quote-btn" onclick="getRandomQuote()" data-aos="fade-up">
-            <i class="fas fa-sync-alt"></i> Другая цитата (اقتباس آخر)
-        </button>
+        <div class="quote-actions" data-aos="fade-up">
+            <button class="action-btn" onclick="getRandomQuote()">
+                <i class="fas fa-sync-alt"></i> Другая цитата
+            </button>
+            <button class="action-btn copy-btn" onclick="copyQuote()">
+                <i class="fas fa-copy"></i> Скопировать (نسخ)
+            </button>
+        </div>
+    </div>
+
+    <!-- إشعار النسخ -->
+    <div class="copy-toast" id="copyToast">
+        <i class="fas fa-check-circle"></i> Цитата скопирована в буфер обмена!
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -374,14 +440,33 @@
             
             lastIndex = randomIndex;
             const quoteDisplay = document.getElementById('quoteDisplay');
+            const authorDisplay = document.getElementById('authorDisplay');
             
             quoteDisplay.style.opacity = 0;
+            authorDisplay.style.opacity = 0;
+            
             setTimeout(() => {
                 quoteDisplay.textContent = quotes[randomIndex].text;
-                document.querySelector('.quote-author').textContent = quotes[randomIndex].author;
+                authorDisplay.textContent = quotes[randomIndex].author;
                 quoteDisplay.style.opacity = 1;
-                quoteDisplay.style.transition = "opacity 0.5s ease";
+                authorDisplay.style.transition = "opacity 0.4s ease";
+                authorDisplay.style.opacity = 1;
+                authorDisplay.style.transition = "opacity 0.4s ease";
             }, 200);
+        }
+
+        function copyQuote() {
+            const quoteText = document.getElementById('quoteDisplay').textContent;
+            const authorText = document.getElementById('authorDisplay').textContent;
+            const fullText = `${quoteText} ${authorText}`;
+
+            navigator.clipboard.writeText(fullText).then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2500);
+            });
         }
     </script>
 </body>
