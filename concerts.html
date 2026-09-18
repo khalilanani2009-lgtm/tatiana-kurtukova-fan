@@ -155,6 +155,7 @@
             flex-wrap: wrap;
             gap: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            cursor: pointer;
         }
 
         .concert-card:hover {
@@ -192,6 +193,31 @@
             gap: 6px;
         }
 
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-details {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 11px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-details:hover {
+            background: rgba(56, 189, 248, 0.15);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
         .btn-buy {
             background: linear-gradient(135deg, #38bdf8, #0284c7);
             color: #090d16;
@@ -213,12 +239,103 @@
             color: #000;
         }
 
+        /* تصميم نافذة التفاصيل المنبثقة (Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(5, 8, 15, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: rgba(13, 20, 38, 0.95);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 550px;
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.35s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: none; border: none;
+            color: var(--silver);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover { color: var(--primary); }
+
+        .modal-title {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+            color: var(--silver);
+            line-height: 1.6;
+        }
+
+        .modal-info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 1.05rem;
+        }
+
+        .modal-info-row i {
+            color: var(--primary);
+            margin-top: 4px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
         @media (max-width: 600px) {
             .concert-card {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            .btn-buy {
+            .card-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+            .btn-details, .btn-buy {
                 width: 100%;
                 justify-content: center;
             }
@@ -261,95 +378,148 @@
         <div class="concerts-grid">
 
             <!-- Ярославль -->
-            <div class="concert-card" data-aos="fade-up">
+            <div class="concert-card" data-aos="fade-up" onclick="openModal('Ярославль', '8 октября 2026 | 19:00', 'КЗЦ «Миллениум»', 'Большой сольный концерт в рамках масштабного тура «Матушка-Земля». Зрителей ждет живой звук, любимые народные хиты и незабываемая атмосфера.')">
                 <div class="concert-info">
                     <div class="concert-date"><i class="far fa-calendar-alt"></i> 8 октября 2026 | 19:00</div>
                     <div class="concert-location">Ярославль</div>
                     <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> КЗЦ «Миллениум»</div>
                 </div>
-                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-details" onclick="openModal('Ярославль', '8 октября 2026 | 19:00', 'КЗЦ «Миллениум»', 'Большой сольный концерт в рамках масштабного тура «Матушка-Земля». Зрителей ждет живой звук, любимые народные хиты и незабываемая атмосфера.')"><i class="fas fa-info-circle"></i> Детали</button>
+                    <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
 
             <!-- Иваново -->
-            <div class="concert-card" data-aos="fade-up" data-aos-delay="50">
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="50" onclick="openModal('Иваново', '9 октября 2026 | 19:00', '«Центр Культуры и Отдыха Иванова»', 'Концертная программа наполнена душевными композициями и новыми музыкальными сюрпризами для всех поклонников творчества Татьяны.')">
                 <div class="concert-info">
                     <div class="concert-date"><i class="far fa-calendar-alt"></i> 9 октября 2026 | 19:00</div>
                     <div class="concert-location">Иваново</div>
                     <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> «Центр Культуры и Отдыха Иванова»</div>
                 </div>
-                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-details" onclick="openModal('Иваново', '9 октября 2026 | 19:00', '«Центр Культуры и Отдыха Иванова»', 'Концертная программа наполнена душевными композициями и новыми музыкальными сюрпризами для всех поклонников творчества Татьяны.')"><i class="fas fa-info-circle"></i> Детали</button>
+                    <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
 
             <!-- Владивосток -->
-            <div class="concert-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="100" onclick="openModal('Владивосток', '4 ноября 2026 | 19:00', 'Концерт Холл (ex. Fesco Hall)', 'Праздничный концерт в День народного единства. Вас ждет невероятная энергетика и любимые песни в живом исполнении.')">
                 <div class="concert-info">
                     <div class="concert-date"><i class="far fa-calendar-alt"></i> 4 ноября 2026 | 19:00</div>
                     <div class="concert-location">Владивосток</div>
                     <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Концерт Холл (ex. Fesco Hall)</div>
                 </div>
-                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-details" onclick="openModal('Владивосток', '4 ноября 2026 | 19:00', 'Концерт Холл (ex. Fesco Hall)', 'Праздничный концерт в День народного единства. Вас ждет невероятная энергетика и любимые песни в живом исполнении.')"><i class="fas fa-info-circle"></i> Детали</button>
+                    <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
 
             <!-- Южно-Сахалинск -->
-            <div class="concert-card" data-aos="fade-up" data-aos-delay="150">
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="150" onclick="openModal('Южно-Сахалинск', '6 ноября 2026 | 19:00', 'Сити Холл', 'Теплый осенний концерт с уникальной акустикой и душевным интерактивом с публикой.')">
                 <div class="concert-info">
                     <div class="concert-date"><i class="far fa-calendar-alt"></i> 6 ноября 2026 | 19:00</div>
                     <div class="concert-location">Южно-Сахалинск</div>
                     <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Сити Холл</div>
                 </div>
-                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-details" onclick="openModal('Южно-Сахалинск', '6 ноября 2026 | 19:00', 'Сити Холл', 'Теплый осенний концерт с уникальной акустикой и душевным интерактивом с публикой.')"><i class="fas fa-info-circle"></i> Детали</button>
+                    <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
 
             <!-- Волгоград -->
-            <div class="concert-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="200" onclick="openModal('Волгоград', '26 ноября 2026 | 19:00', 'ЦКЗ Волгоградской филармонии', 'Грандиозное шоу на главной сцене филармонии. Специальная программа и световое оформление.')">
                 <div class="concert-info">
                     <div class="concert-date"><i class="far fa-calendar-alt"></i> 26 ноября 2026 | 19:00</div>
                     <div class="concert-location">Волгоград</div>
                     <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> ЦКЗ Волгоградской филармонии</div>
                 </div>
-                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-details" onclick="openModal('Волгоград', '26 ноября 2026 | 19:00', 'ЦКЗ Волгоградской филармонии', 'Грандиозное шоу на главной сцене филармонии. Специальная программа и световое оформление.')"><i class="fas fa-info-circle"></i> Детали</button>
+                    <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
 
             <!-- Тольятти -->
-            <div class="concert-card" data-aos="fade-up" data-aos-delay="250">
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="250" onclick="openModal('Тольятти', '2 декабря 2026 | 19:00', 'ДК Тольятти им Н.В. Абрамова', 'Встречайте любимую артистку с сольной программой в ДК Тольятти. Живой звук и прекрасное настроение гарантированы.')">
                 <div class="concert-info">
                     <div class="concert-date"><i class="far fa-calendar-alt"></i> 2 декабря 2026 | 19:00</div>
                     <div class="concert-location">Тольятти</div>
                     <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> ДК Тольятти им Н.В. Абрамова</div>
                 </div>
-                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-details" onclick="openModal('Тольятти', '2 декабря 2026 | 19:00', 'ДК Тольятти им Н.В. Абрамова', 'Встречайте любимую артистку с сольной программой в ДК Тольятти. Живой звук и прекрасное настроение гарантированы.')"><i class="fas fa-info-circle"></i> Детали</button>
+                    <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
 
             <!-- Самара -->
-            <div class="concert-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="300" onclick="openModal('Самара', '3 декабря 2026 | 19:00', 'Самарская государственная филармония', 'Концерт на престижной площадке Самарской филармонии. Вас ждут лучшие хиты и премьеры песен.')">
                 <div class="concert-info">
                     <div class="concert-date"><i class="far fa-calendar-alt"></i> 3 декабря 2026 | 19:00</div>
                     <div class="concert-location">Самара</div>
                     <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Самарская государственная филармония</div>
                 </div>
-                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-details" onclick="openModal('Самара', '3 декабря 2026 | 19:00', 'Самарская государственная филармония', 'Концерт на престижной площадке Самарской филармонии. Вас ждут лучшие хиты и премьеры песен.')"><i class="fas fa-info-circle"></i> Детали</button>
+                    <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
 
             <!-- Ростов-на-Дону -->
-            <div class="concert-card" data-aos="fade-up" data-aos-delay="350">
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="350" onclick="openModal('Ростов-на-Дону', '2 февраля 2027 | 19:00', 'Театр драмы им. М. Горького', 'Зимнее турне продолжается! Яркое музыкальное событие на исторической сцене театра.')">
                 <div class="concert-info">
                     <div class="concert-date"><i class="far fa-calendar-alt"></i> 2 февраля 2027 | 19:00</div>
                     <div class="concert-location">Ростов-на-Дону</div>
                     <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Театр драмы им. М. Горького</div>
                 </div>
-                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-details" onclick="openModal('Ростов-на-Дону', '2 февраля 2027 | 19:00', 'Театр драмы им. М. Горького', 'Зимнее турне продолжается! Яркое музыкальное событие на исторической сцене театра.')"><i class="fas fa-info-circle"></i> Детали</button>
+                    <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
 
             <!-- Краснодар -->
-            <div class="concert-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="concert-card" data-aos="fade-up" data-aos-delay="400" onclick="openModal('Краснодар', '3 февраля 2027 | 19:00', 'Центральный концертный зал', 'Заключительный аккорд зимней серии концертов. Насладитесь теплой атмосферой и любимым творчеством.')">
                 <div class="concert-info">
                     <div class="concert-date"><i class="far fa-calendar-alt"></i> 3 февраля 2027 | 19:00</div>
                     <div class="concert-location">Краснодар</div>
                     <div class="concert-venue"><i class="fas fa-map-marker-alt"></i> Центральный концертный зал</div>
                 </div>
-                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                <div class="card-actions" onclick="event.stopPropagation()">
+                    <button class="btn-details" onclick="openModal('Краснодар', '3 февраля 2027 | 19:00', 'Центральный концертный зал', 'Заключительный аккорд зимней серии концертов. Насладитесь теплой атмосферой и любимым творчеством.')"><i class="fas fa-info-circle"></i> Детали</button>
+                    <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy">Купить билет <i class="fas fa-external-link-alt"></i></a>
+                </div>
             </div>
 
+        </div>
+    </div>
+
+    <!-- نافذة تفاصيل الحفل المنبثقة (Modal) -->
+    <div class="modal-overlay" id="concertModal" onclick="closeModal()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <h3 class="modal-title" id="modalCity"><i class="fas fa-map-marker-alt"></i> عنوان الحفل</h3>
+            <div class="modal-body">
+                <div class="modal-info-row">
+                    <i class="far fa-calendar-alt"></i>
+                    <div><strong>Дата и время:</strong> <span id="modalDate">-</span></div>
+                </div>
+                <div class="modal-info-row">
+                    <i class="fas fa-building"></i>
+                    <div><strong>Площадка:</strong> <span id="modalVenue">-</span></div>
+                </div>
+                <div class="modal-info-row">
+                    <i class="fas fa-microphone-alt"></i>
+                    <div><strong>Описание программы:</strong> <span id="modalDesc">-</span></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-details" onclick="closeModal()">Закрыть</button>
+                <a href="https://gamma-music.ru/ktur_matushka_zemlya?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="btn-buy" id="modalBuyBtn">Купить билет <i class="fas fa-external-link-alt"></i></a>
+            </div>
         </div>
     </div>
 
@@ -360,6 +530,18 @@
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('overlay').classList.toggle('show');
+        }
+
+        function openModal(city, date, venue, desc) {
+            document.getElementById('modalCity').innerHTML = `<i class="fas fa-star"></i> Концерт в г. ${city}`;
+            document.getElementById('modalDate').innerText = date;
+            document.getElementById('modalVenue').innerText = venue;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('concertModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('concertModal').classList.remove('active');
         }
     </script>
 </body>
