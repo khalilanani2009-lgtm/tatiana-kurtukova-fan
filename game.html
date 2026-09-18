@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Игра — Татьяна Куртукова</title>
+    <title>Эпическая Игра — Татьяна Куртукова</title>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
             --primary: #4a90e2;          /* الأزرق الملكي */
-            --primary-glow: rgba(74, 144, 226, 0.5);
+            --primary-glow: rgba(74, 144, 226, 0.6);
             --bg-dark: #0a0f1d;          /* خلفية داكنة عميقة متناسقة */
-            --card-bg: rgba(15, 23, 42, 0.9);
+            --card-bg: rgba(15, 23, 42, 0.92);
             --text-light: #ffffff;
             --accent-silver: #e2e8f0;    /* الفضي المضيء */
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,7 +34,7 @@
         .bg-hero {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(to bottom, rgba(10,15,29,0.8), rgba(10,15,29,0.95)),
+            background: linear-gradient(to bottom, rgba(10,15,29,0.82), rgba(10,15,29,0.96)),
                         url('profile.jpg') center/cover no-repeat;
             z-index: -2;
             animation: zoomBg 25s infinite alternate ease-in-out;
@@ -41,7 +44,7 @@
 
         .glow-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 30%, rgba(74, 144, 226, 0.15), transparent 75%);
+            background: radial-gradient(circle at 50% 30%, rgba(74, 144, 226, 0.18), transparent 75%);
             z-index: -1; pointer-events: none;
         }
 
@@ -140,132 +143,234 @@
             background: var(--primary); color: #fff; box-shadow: 0 0 15px var(--primary);
         }
 
-        .container { max-width: 750px; margin: 0 auto; padding: 30px 20px; flex: 1; width: 100%; }
+        .container { max-width: 800px; margin: 0 auto; padding: 30px 20px; flex: 1; width: 100%; }
 
         .page-title {
-            text-align: center; color: var(--primary); font-size: 2.2rem; margin-bottom: 10px;
-            text-shadow: 0 0 15px rgba(74, 144, 226, 0.4);
+            text-align: center; color: var(--primary); font-size: 2.4rem; margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
         }
 
         .page-subtitle {
-            text-align: center; color: #94a3b8; margin-bottom: 25px; font-size: 1rem;
+            text-align: center; color: #94a3b8; margin-bottom: 25px; font-size: 1.05rem;
         }
 
-        /* شريط معلومات اللعبة (العداد والنقاط فوق) */
+        /* لوحة معلومات اللعبة الأسطورية */
         .quiz-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(74, 144, 226, 0.1);
-            border: 1px solid rgba(74, 144, 226, 0.3);
-            padding: 12px 20px;
-            border-radius: 12px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            background: rgba(74, 144, 226, 0.12);
+            border: 1px solid rgba(74, 144, 226, 0.35);
+            padding: 14px 18px;
+            border-radius: 14px;
             margin-bottom: 20px;
             font-weight: bold;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             color: var(--accent-silver);
+            text-align: center;
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-item span:last-child {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* شريط الوقت المتوهج */
+        .timer-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--primary), #a855f7);
+            transition: width 1s linear;
         }
 
         .quiz-card {
             background: var(--card-bg);
             border: 1px solid rgba(74, 144, 226, 0.4);
             border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 35px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            position: relative;
         }
 
         .question-text {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: #fff;
             text-align: center;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .options-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .option-btn {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(74, 144, 226, 0.3);
             color: var(--accent-silver);
-            padding: 14px 20px;
-            border-radius: 12px;
-            font-size: 1rem;
+            padding: 16px 22px;
+            border-radius: 14px;
+            font-size: 1.05rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .option-btn:hover:not(:disabled) {
-            background: rgba(74, 144, 226, 0.2);
+            background: rgba(74, 144, 226, 0.25);
             border-color: var(--primary);
-            transform: translateX(5px);
+            transform: translateX(6px);
+            box-shadow: 0 0 15px var(--primary-glow);
         }
 
-        /* مربع التعليق التحفيزي أو المضحك بعد الإجابة */
+        /* أزرار المساعدة والفعاليات الجانبية داخل الكارد */
+        .game-tools {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-lifeline {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-lifeline:hover:not(:disabled) {
+            background: var(--warning);
+            color: #000;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-lifeline:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* مربع التعليق التحفيزي */
         .feedback-box {
             margin-top: 20px;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 12px;
             text-align: center;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.05rem;
             display: none;
             animation: fadeIn 0.4s ease;
         }
 
         .feedback-box.correct {
-            background: rgba(46, 204, 113, 0.2);
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid var(--success);
+            color: var(--success);
         }
 
         .feedback-box.wrong {
-            background: rgba(231, 76, 60, 0.2);
-            border: 1px solid #e74c3c;
-            color: #e74c3c;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid var(--danger);
+            color: var(--danger);
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
         .result-box {
             text-align: center;
             display: none;
+            animation: fadeIn 0.6s ease;
         }
 
         .score-num {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: var(--primary);
             font-weight: bold;
             margin: 15px 0;
-            text-shadow: 0 0 15px var(--primary-glow);
+            text-shadow: 0 0 25px var(--primary-glow);
+        }
+
+        .rank-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
         }
 
         .btn-restart {
             background: transparent;
             border: 2px solid var(--primary);
             color: var(--primary);
-            padding: 12px 28px;
-            border-radius: 25px;
+            padding: 14px 32px;
+            border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin-top: 20px;
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(74, 144, 226, 0.2);
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.2);
         }
 
         .btn-restart:hover {
             background: var(--primary);
             color: #fff;
-            box-shadow: 0 0 20px var(--primary-glow);
+            box-shadow: 0 0 25px var(--primary-glow);
             transform: scale(1.05);
+        }
+
+        /* تأثيرات النجوم والاحتفال */
+        .confetti-particle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            top: -10px;
+            z-index: 9999;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(720deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -287,7 +392,7 @@
             <a href="about.html"><i class="fas fa-user-star"></i> О Татьяне</a>
             <a href="quotes.html"><i class="fas fa-quote-right"></i> Цитаты</a>
             <a href="gallery.html"><i class="fas fa-images"></i> Галерея</a>
-            <a href="game.html" class="active"><i class="fas fa-gamepad"></i> Игры (Мини-игра)</a>
+            <a href="game.html" class="active"><i class="fas fa-gamepad"></i> Эпическая Игра</a>
         </div>
     </aside>
 
@@ -302,32 +407,59 @@
     <!-- شريط الأخبار المتحرك -->
     <div class="news-ticker">
         <div class="news-ticker-content">
-            ✨ Проверь себя в викторине о Татьяне Куртуковой &nbsp;&nbsp;&nbsp; 📅 Концерты в Ярославле (8 октября) и Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже!
+            ✨ Проверь себя в грандиозной викторине о Татьяне Куртуковой &nbsp;&nbsp;&nbsp; 📅 Сольные концерты: Ярославль (8 октября) и Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже!
         </div>
     </div>
 
     <div class="container">
-        <h1 class="page-title" data-aos="fade-down"><i class="fas fa-gamepad"></i> Викторина</h1>
-        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Насколько хорошо вы знаете творчество и факты о Татьяне?</p>
+        <h1 class="page-title" data-aos="fade-down"><i class="fas fa-gamepad"></i> Эпическая Викторина</h1>
+        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Пройдите уникальный интерактивный вызов и докажите, что вы главный знаток творчества певицы!</p>
 
         <div class="quiz-card" data-aos="fade-up">
-            <!-- شريط معلومات العداد والنقاط في الأعلى -->
+            <!-- شريط المعلومات الأسطوري الجديد -->
             <div class="quiz-stats" id="quizStats">
-                <span id="questionCounter">Вопрос: 1 / 8</span>
-                <span id="currentScore">Очки: 0</span>
+                <div class="stat-item">
+                    <span>Вопрос</span>
+                    <span id="questionCounter">1 / 12</span>
+                </div>
+                <div class="stat-item">
+                    <span>Очки</span>
+                    <span id="currentScore">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Комбо 🔥</span>
+                    <span id="streakCount">0x</span>
+                </div>
+                <div class="stat-item">
+                    <span>Артефакты ❤️</span>
+                    <span id="livesCount">❤️❤️❤️</span>
+                </div>
+            </div>
+
+            <!-- شريط الوقت التنازلي -->
+            <div class="timer-bar-container" id="timerContainer">
+                <div class="timer-bar" id="timerBar"></div>
             </div>
 
             <div id="quizContainer">
-                <div class="question-text" id="questionText">Загрузка...</div>
+                <div class="question-text" id="questionText">Загрузка эпического контента...</div>
                 <div class="options-grid" id="optionsGrid"></div>
+                
+                <!-- أدوات مساعدة وفعاليات فريدة داخل الكارد -->
+                <div class="game-tools">
+                    <button class="btn-lifeline" id="fiftyBtn" onclick="useFiftyFifty()"><i class="fas fa-magic"></i> حذف إجابتين (50/50)</button>
+                    <span style="color: #94a3b8; font-size: 0.85rem;"><i class="fas fa-info-circle"></i> اختر الإجابة بدقة لرفع مستوى الكمбо!</span>
+                </div>
+
                 <div class="feedback-box" id="feedbackBox"></div>
             </div>
 
             <div class="result-box" id="resultBox">
-                <h2>Результат викторины</h2>
-                <div class="score-num" id="scoreDisplay">0 / 8</div>
+                <h2>Итоги эпического испытания</h2>
+                <div class="rank-badge" id="rankBadge">🎖️ Абсолютный Эксперт</div>
+                <div class="score-num" id="scoreDisplay">0 / 12</div>
                 <p id="resultComment" style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 20px;"></p>
-                <button class="btn-restart" onclick="restartQuiz()"><i class="fas fa-redo"></i> Пройти снова</button>
+                <button class="btn-restart" onclick="restartQuiz()"><i class="fas fa-redo"></i> Повторить испытание</button>
             </div>
         </div>
     </div>
@@ -341,77 +473,160 @@
             document.getElementById('overlay').classList.toggle('show');
         }
 
-        // بنك الأسئلة الموسع عن تاتيانا كورتوكوفا
+        /* بنك الأسئلة الموسع والأسطوري الشامل لكل تفاصيل تاتيانا ومواعيدها */
         const questions = [
             {
-                question: "Как называется один из самых известных всенародных хитов Татьяны Куртуковой?",
-                options: ["Матушка", "Катюша", "Волга", "Соловей"],
+                question: "Какая всенародно известная песня Татьяны Куртуковой стала её визитной карточкой?",
+                options: ["Матушка", "Катюша", "Широка река", "Россия-мать"],
                 correct: 0,
-                correctComment: "Браво! Верно! Эта песня звучит в каждом сердце! 🌟",
-                wrongComment: "Ой-ой! Не угадали, это же легендарная «Матушка»! 😉"
+                correctComment: "Великолепно! Песня «Матушка» покорила миллионы сердец! 🌟",
+                wrongComment: "Мимо! Это же легендарная песня «Матушка»!"
             },
             {
-                question: "Как называется масштабный гастрольный тур Татьяны?",
-                options: ["Русская душа", "Матушка-Земля", "Золотое кольцо", "Песни России"],
+                question: "Как называется масштабный гастрольный тур певицы, охватывающий десятки городов?",
+                options: ["Русская душа", "Матушка-Земля", "Золотое кольцо", "Песни над Волгой"],
                 correct: 1,
-                correctComment: "Отлично! Тур «Матушка-Земля» покоряет всю страну! 🌍",
-                wrongComment: "Мимо! Правильный ответ: «Матушка-Земля». Попробуем следующий!"
+                correctComment: "Верно! Грандиозный тур «Матушка-Земля» триумфально шествует по стране! 🌍",
+                wrongComment: "Ошибка! Правильный ответ — тур «Матушка-Земля»."
             },
             {
                 question: "В каком российском городе запланирован сольный концерт Татьяны 8 октября 2026 года?",
-                options: ["Иваново", "Самара", "Ярославль", "Краснодар"],
+                options: ["Иваново", "Казань", "Ярославль", "Владимир"],
                 correct: 2,
-                correctComment: "Великолепно! Ярославль ждет этот потрясающий вечер! 🎤",
-                wrongComment: "Не совсем! 8 октября концерт пройдет в Ярославле!"
+                correctComment: "Браво! Ярославль с нетерпением ждет этого незабываемого вечера! 🎤",
+                wrongComment: "Не угадали! 8 октября концерт состоится в Ярославле."
             },
             {
-                question: "В каком жанре преимущественно исполняет свои песни Татьяна?",
-                options: ["Рок-музыка", "Народная / Фолк-поп музыка", "Джаз и блюз", "Электронная клубная музыка"],
+                question: "Какой город следует сразу за Ярославлем в концертном графике октября 2026 года?",
+                options: ["Москва", "Иваново", "Санкт-Петербург", "Нижний Новгород"],
                 correct: 1,
-                correctComment: "Верно! Чарующая русская фолк-поп музыка её визитная карточка! 🎵",
-                wrongComment: "Эх, нет! Татьяна — звезда народной и фолк-поп музыки."
+                correctComment: "Отлично! 9 октября грандиозное шоу пройдет в Иваново! 🎫",
+                wrongComment: "Мимо! Следующий город в туре — Иваново."
             },
             {
-                question: "Какой праздник отмечается 9 сентября, в день рождения Татьяны Куртуковой?",
-                options: ["День музыки", "День рождения певицы", "День весны", "День народного единства"],
+                question: "Какая дата является днем рождения Татьяны Куртуковой?",
+                options: ["12 июня", "9 сентября", "5 мая", "25 ноября"],
                 correct: 1,
-                correctComment: "Идеально! День рождения нашей любимой артистки! 🎂",
-                wrongComment: "Ха-ха, ну это же день рождения самой Татьяны! 🎈"
+                correctComment: "Идеально! 9 сентября — особенный праздник для всех поклонников! 🎂",
+                wrongComment: "Неверно! День рождения певицы отмечается 9 сентября."
             },
             {
-                question: "Какой инструмент часто создает неповторимый колорит в её народных композициях?",
-                options: ["Электрогитара", "Балалайка / народные мотивы", "Саксофон", "Барабанная установка"],
+                question: "В каком музыкальном жанре преимущественно творит и исполняет свои композиции Татьяна?",
+                options: ["Рок и метал", "Народная / Фолк-поп музыка", "Джаз и импровизация", "Электронная клубная музыка"],
                 correct: 1,
-                correctComment: "Верно! Традиционные мотивы и инструменты звучат волшебно! ✨",
-                wrongComment: "Не угадали! Акцент делается на традиционные русские мотивы."
+                correctComment: "Точно! Чарующая фолк-поп музыка и народные мотивы — её стихия! 🎵",
+                wrongComment: "Эх, нет! Татьяна выступает в жанре народной и фолк-поп музыки."
             },
             {
-                question: "Какой город следует сразу за Ярославлем в гастрольном графике концертов октября 2026?",
-                options: ["Иваново", "Москва", "Санкт-Петербург", "Казань"],
+                question: "Что всегда становится главным украшением любого живого выступления Татьяны?",
+                options: ["Сложные цирковые трюки", "Невероятная искренность и чистый живой голос", "Игра на электрогитаре соло", "Оперное сопрано"],
+                correct: 1,
+                correctComment: "Верно! Её искренность и душевность проникают прямо в душу! ❤️",
+                wrongComment: "Неправильно! Главная сила артистки — её искренность и живой голос."
+            },
+            {
+                question: "Какой фестиваль с участием Татьяны привлек огромное внимание зрителей и VK Video в сентябре 2026?",
+                options: ["МФМ-2026 (Таврида.АРТ)", "Новая волна", "Славянский базар", "Жара"],
                 correct: 0,
-                correctComment: "Супер! 9 октября концерт состоится в Иваново! 🎫",
-                wrongComment: "Ошибка! Следующий город по списку — Иваново."
+                correctComment: "Потрясающе! Яркое выступление на МФМ-2026 запомнится надолго! ✨",
+                wrongComment: "Ошибка! Это было масштабное событие МФМ-2026 (Таврида.АРТ)."
             },
             {
-                question: "Что всегда отличает выступления Татьяны Куртуковой на сцене?",
-                options: ["Мгновенная смена 10 костюмов", "Невероятная искренность и живой голос", "Игра на барабанах соло", "Оперный вокал"],
+                question: "Какой инструмент часто создает неповторимый традиционный колорит в её композициях?",
+                options: ["Саксофон", "Синтезатор", "Народные мотивы и русские инструменты", "Контрабас"],
+                correct: 2,
+                correctComment: "Великолепно! Традиционное звучание придает песням особую магию! 🎶",
+                wrongComment: "Не угадали! Акцент сделан на аутентичные народные мотивы."
+            },
+            {
+                question: "С какого ракурса принято рассказывать о творческих успехах и концертах певицы на официальной фан-странице?",
+                options: ["От первого лица («Я выступала»)", "От третьего лица («Татьяна выступала»)", "В виде новостной сводки новостей", "В стихотворной форме"],
                 correct: 1,
-                correctComment: "Точно! Её искренность покоряет зрителей с первой ноты! ❤️",
-                wrongComment: "Неверно! Главное её богатство — это искренность и чистый живой голос."
+                correctComment: "Безупречно! Согласно регламенту фан-страницы, материалы публикуются от третьего лица! 🏆",
+                wrongComment: "Внимание! Официальный стиль фан-страницы использует рассказ от третьего лица."
+            },
+            {
+                question: "Какой важный летний музыкальный фестиваль в Казани освещался фан-сообществом в августе 2026?",
+                options: ["Новая волна", "Белые ночи", "Утренняя звезда", "Голос степей"],
+                correct: 0,
+                correctComment: "Верно! Фестиваль «Новая волна 2026» в Казани подарил массу эмоций! 🌠",
+                wrongComment: "Мимо! Это была знаменитая «Новая волна 2026»."
+            },
+            {
+                question: "Какая главная атмосфера царит на сольных концертах в рамках тура «Матушка-Земля»?",
+                options: ["Тишина и строгий академизм", "Единение, народное пение хором и мощная энергетика", "Танцевальная электронная давка", "Театральная драма"],
+                correct: 1,
+                correctComment: "Истинно так! Зал всегда поет любимые песни единым мощным хором! 🎤🔥",
+                wrongComment: "Неверно! Атмосфера концертов наполнена душевным единением и общим пением."
             }
         ];
 
         let currentQuestion = 0;
         let score = 0;
+        let streak = 0;
+        let lives = 3;
         let isAnswered = false;
+        let timerInterval;
+        let timeLeft = 20;
+
+        function updateStatsUI() {
+            document.getElementById('questionCounter').innerText = `${currentQuestion + 1} / ${questions.length}`;
+            document.getElementById('currentScore').innerText = score;
+            document.getElementById('streakCount').innerText = `${streak}x`;
+            document.getElementById('livesCount').innerText = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 20;
+            const timerBar = document.getElementById('timerBar');
+            timerBar.style.width = '100%';
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                let percent = (timeLeft / 20) * 100;
+                timerBar.style.width = `${percent}%`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function handleTimeOut() {
+            if (isAnswered) return;
+            isAnswered = true;
+            lives--;
+            streak = 0;
+            updateStatsUI();
+
+            const q = questions[currentQuestion];
+            const feedbackBox = document.getElementById('feedbackBox');
+            const buttons = document.querySelectorAll('.option-btn');
+
+            buttons.forEach((b, idx) => {
+                b.disabled = true;
+                if (idx === q.correct) {
+                    b.style.background = 'rgba(34, 197, 94, 0.3)';
+                    b.style.borderColor = 'var(--success)';
+                }
+            });
+
+            feedbackBox.className = 'feedback-box wrong';
+            feedbackBox.innerHTML = `<i class="fas fa-clock"></i> انتهى الوقت! خسرت قلباً. الإجابة الصحيحة كانت موصوفة في الخيار الأخضر.`;
+            feedbackBox.style.display = 'block';
+
+            setTimeout(nextStepCheck, 2500);
+        }
 
         function loadQuestion() {
             isAnswered = false;
+            document.getElementById('fiftyBtn').disabled = false;
+            updateStatsUI();
+            startTimer();
+
             const q = questions[currentQuestion];
-            
-            document.getElementById('questionCounter').innerText = `Вопрос: ${currentQuestion + 1} / ${questions.length}`;
-            document.getElementById('currentScore').innerText = `Очки: ${score}`;
-            
             document.getElementById('questionText').innerText = q.question;
             const grid = document.getElementById('optionsGrid');
             grid.innerHTML = '';
@@ -422,7 +637,7 @@
             q.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                btn.innerText = opt;
+                btn.innerHTML = `<span>${opt}</span> <i class="far fa-circle" style="opacity:0.4;"></i>`;
                 btn.onclick = () => selectOption(idx, btn);
                 grid.appendChild(btn);
             });
@@ -431,68 +646,135 @@
         function selectOption(idx, selectedBtn) {
             if (isAnswered) return;
             isAnswered = true;
+            clearInterval(timerInterval);
 
             const q = questions[currentQuestion];
             const feedbackBox = document.getElementById('feedbackBox');
             const buttons = document.querySelectorAll('.option-btn');
 
             buttons.forEach(b => b.disabled = true);
+            document.getElementById('fiftyBtn').disabled = true;
 
             if (idx === q.correct) {
-                score++;
-                selectedBtn.style.background = 'rgba(46, 204, 113, 0.3)';
-                selectedBtn.style.borderColor = '#2ecc71';
+                score += 10 + (streak * 2); // مكافأة الكمбо
+                streak++;
+                selectedBtn.style.background = 'rgba(34, 197, 94, 0.3)';
+                selectedBtn.style.borderColor = 'var(--success)';
+                selectedBtn.querySelector('i').className = 'fas fa-check-circle';
+                selectedBtn.querySelector('i').style.color = 'var(--success)';
                 feedbackBox.className = 'feedback-box correct';
-                feedbackBox.innerText = q.correctComment;
+                feedbackBox.innerHTML = `<i class="fas fa-star"></i> ${q.correctComment}`;
             } else {
-                selectedBtn.style.background = 'rgba(231, 76, 60, 0.3)';
-                selectedBtn.style.borderColor = '#e74c3c';
-                buttons[q.correct].style.background = 'rgba(46, 204, 113, 0.3)';
-                buttons[q.correct].style.borderColor = '#2ecc71';
+                lives--;
+                streak = 0;
+                selectedBtn.style.background = 'rgba(239, 68, 68, 0.3)';
+                selectedBtn.style.borderColor = 'var(--danger)';
+                selectedBtn.querySelector('i').className = 'fas fa-times-circle';
+                selectedBtn.querySelector('i').style.color = 'var(--danger)';
+
+                buttons[q.correct].style.background = 'rgba(34, 197, 94, 0.3)';
+                buttons[q.correct].style.borderColor = 'var(--success)';
+                buttons[q.correct].querySelector('i').className = 'fas fa-check-circle';
+                buttons[q.correct].querySelector('i').style.color = 'var(--success)';
                 
                 feedbackBox.className = 'feedback-box wrong';
-                feedbackBox.innerText = q.wrongComment;
+                feedbackBox.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${q.wrongComment}`;
             }
 
-            document.getElementById('currentScore').innerText = `Очки: ${score}`;
+            updateStatsUI();
             feedbackBox.style.display = 'block';
 
-            setTimeout(() => {
+            setTimeout(nextStepCheck, 2500);
+        }
+
+        function nextStepCheck() {
+            if (lives <= 0) {
+                showResults(true);
+            } else {
                 currentQuestion++;
                 if (currentQuestion < questions.length) {
                     loadQuestion();
                 } else {
-                    showResults();
+                    showResults(false);
                 }
-            }, 2200);
+            }
         }
 
-        function showResults() {
+        /* ميزة مساعدة فريدة: حذف إجابتين خطأ */
+        function useFiftyFifty() {
+            if (isAnswered) return;
+            document.getElementById('fiftyBtn').disabled = true;
+
+            const q = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.option-btn');
+            let hiddenCount = 0;
+
+            buttons.forEach((btn, idx) => {
+                if (idx !== q.correct && hiddenCount < 2) {
+                    btn.style.opacity = '0.2';
+                    btn.style.pointerEvents = 'none';
+                    hiddenCount++;
+                }
+            });
+        }
+
+        function showResults(isGameOver = false) {
+            clearInterval(timerInterval);
             document.getElementById('quizStats').style.display = 'none';
+            document.getElementById('timerContainer').style.display = 'none';
             document.getElementById('quizContainer').style.display = 'none';
+            
             const resultBox = document.getElementById('resultBox');
             resultBox.style.display = 'block';
-            document.getElementById('scoreDisplay').innerText = `${score} / ${questions.length}`;
+            document.getElementById('scoreDisplay').innerText = `${score} نقطة`;
 
+            let rank = "";
             let comment = "";
-            if (score === questions.length) {
-                comment = "🏆 Великолепно! Вы абсолютный эксперт и самый преданный фанат Татьяны Куртуковой! 🌟";
-            } else if (score >= questions.length / 2) {
-                comment = "🎵 Отличный результат! Вы прекрасно знаете творчество и концерты Татьяны! ✨";
+
+            if (isGameOver) {
+                rank = "⚡ المحاول الشجاع";
+                comment = "😅 نفدت قلوبك الثلاثة! استعرض محتوى الموقع وتعرف أكثر على تاتيانا ثم حاول مجدداً لتحقيق اللقب الأسطوري!";
+            } else if (score >= 120) {
+                rank = "👑 الأسطورة الخارقة (الخبير المطلق)";
+                comment = "🏆 مذهل للغاية! أنت لست مجرد معجب، بل حافظ الأسرار والملهم الأول لصفحة تاتيانا كورتوكوفا!";
+                triggerConfetti();
+            } else if (score >= 70) {
+                rank = "🌟 خبير معجبين ملكي";
+                comment = "🎵 نتيجة ممتازة للغاية! إحاطتك بمواعيد الحفلات وأغاني تاتيانا تثير الإعجاب حقاً!";
             } else {
-                comment = "😅 Неплохая попытка! Стоит перечитать разделы сайта и попробовать снова! 💪";
+                rank = "🎵 محب مبتدئ متألق";
+                comment = "💡 بداية رائعة! جولة «Матушка-Земля» مليئة بالمفاجآت، استكشف الأقسام الأخرى وعد لتسجيل رقم قياسي أعلى!";
             }
+
+            document.getElementById('rankBadge').innerText = rank;
             document.getElementById('resultComment').innerText = comment;
         }
 
         function restartQuiz() {
             currentQuestion = 0;
             score = 0;
+            streak = 0;
+            lives = 3;
             isAnswered = false;
-            document.getElementById('quizStats').style.display = 'flex';
+            document.getElementById('quizStats').style.display = 'grid';
+            document.getElementById('timerContainer').style.display = 'block';
             document.getElementById('quizContainer').style.display = 'block';
             document.getElementById('resultBox').style.display = 'none';
             loadQuestion();
+        }
+
+        /* تأثير احتفالي بالنجوم والقصاصات عند الفوز الأسطوري */
+        function triggerConfetti() {
+            for (let i = 0; i < 70; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'confetti-particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.backgroundColor = ['#4a90e2', '#f59e0b', '#22c55e', '#a855f7', '#ffffff'][Math.floor(Math.random() * 5)];
+                particle.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                particle.style.animationDelay = (Math.random() * 0.5) + 's';
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 3500);
+            }
         }
 
         loadQuestion();
