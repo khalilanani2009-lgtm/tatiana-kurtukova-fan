@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Галерея и Воспоминания — Татьяна Куртукова</title>
+    <title>Галерея и Воспоминания — Татьяна Куртукова (Официальное фан-сообщество)</title>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
@@ -15,6 +15,7 @@
             --card-bg: rgba(15, 23, 42, 0.75);
             --text-light: #f8fafc;
             --accent-gold: #7dd3fc;
+            --neon-border: rgba(56, 189, 248, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,7 +64,7 @@
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+            border-bottom: 1px solid var(--neon-border);
             padding: 12px 25px;
             display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 1000;
@@ -92,7 +93,7 @@
             background: rgba(11, 17, 32, 0.98);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(56, 189, 248, 0.3);
+            border-right: 1px solid var(--neon-border);
             z-index: 2000;
             transition: left 0.4s ease;
             padding: 25px 20px;
@@ -149,122 +150,229 @@
             box-shadow: 0 0 15px var(--primary-glow);
         }
 
-        /* تنسيق معرض الصور */
+        /* تنسيق معرض الصور الشبكي الزجاجي (Bento Grid) */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
             flex: 1;
         }
 
         .page-title {
             color: var(--primary);
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             text-align: center;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+            font-weight: 800;
         }
 
         .page-subtitle {
             color: var(--silver);
             text-align: center;
             font-size: 1.1rem;
-            margin-bottom: 40px;
+            margin-bottom: 45px;
         }
 
-        .gallery-grid {
+        .gallery-bento-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
+            grid-auto-flow: dense;
         }
 
+        /* تنويع أحجام الكروت لإعطاء مظهر Bento فخم */
         .gallery-card {
             background: var(--card-bg);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 15px;
+            border: 1px solid var(--neon-border);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
 
         .gallery-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(56, 189, 248, 0.6);
-            box-shadow: 0 12px 35px rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.7);
+            box-shadow: 0 20px 45px rgba(56, 189, 248, 0.25);
+        }
+
+        .gallery-card.tall {
+            grid-row: span 2;
         }
 
         .gallery-img-container {
             width: 100%;
-            height: 240px;
+            flex: 1;
+            min-height: 250px;
             overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-card.tall .gallery-img-container {
+            min-height: 480px;
         }
 
         .gallery-img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s ease;
         }
 
         .gallery-card:hover .gallery-img-container img {
             transform: scale(1.08);
         }
 
-        .gallery-info {
+        /* طبقة تفاعلية تظهر عند المرور على الصورة */
+        .img-overlay-hover {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(9, 13, 22, 0.4);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-card:hover .img-overlay-hover {
+            opacity: 1;
+        }
+
+        .img-overlay-hover i {
+            color: var(--primary);
+            font-size: 2rem;
+            background: rgba(15, 23, 42, 0.8);
             padding: 15px;
-            text-align: center;
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-card:hover .img-overlay-hover i {
+            transform: scale(1);
+        }
+
+        .gallery-info {
+            padding: 18px 20px;
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid rgba(56, 189, 248, 0.15);
         }
 
         .gallery-info h3 {
             color: var(--text-light);
-            font-size: 1.05rem;
-            font-weight: 500;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
 
-        /* نافذة العرض الكبيرة (Lightbox) مع الإطار الفضي/الأزرق وأزرار التنقل */
+        .gallery-info p {
+            color: var(--accent-gold);
+            font-size: 0.85srem;
+            font-size: 0.9rem;
+        }
+
+        /* نافذة العرض الكبيرة (Lightbox) بتصميم راقي وزر التحميل */
         .lightbox-modal {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(9, 13, 22, 0.92);
+            background: rgba(9, 13, 22, 0.94);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 3000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            padding: 20px;
         }
 
         .lightbox-modal.active {
             display: flex;
         }
 
-        .lightbox-content {
+        .lightbox-wrapper {
             position: relative;
-            max-width: 85vw;
-            max-height: 85vh;
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
             border: 2px solid var(--primary);
-            border-radius: 15px;
-            box-shadow: 0 0 35px var(--primary-glow);
-            background: var(--bg-dark);
+            border-radius: 20px;
+            box-shadow: 0 0 50px var(--primary-glow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lightbox-img-container {
+            width: 100%;
+            max-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
             overflow: hidden;
         }
 
-        .lightbox-content img {
-            width: 100%;
-            height: auto;
-            max-height: 80vh;
-            display: block;
+        .lightbox-img-container img {
+            max-width: 100%;
+            max-height: 70vh;
             object-fit: contain;
+            display: block;
         }
 
-        .lightbox-close, .lightbox-btn {
-            position: absolute;
-            background: rgba(15, 23, 42, 0.8);
+        .lightbox-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 17, 32, 0.95);
+            border-top: 1px solid var(--neon-border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .lightbox-caption {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .lightbox-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .lightbox-action-btn {
+            background: transparent;
             border: 1px solid var(--primary);
             color: var(--primary);
-            font-size: 1.3rem;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .lightbox-action-btn:hover {
+            background: var(--primary);
+            color: #090d16;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .lightbox-close, .lightbox-nav-btn {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 1.2rem;
             cursor: pointer;
             width: 45px; height: 45px;
             border-radius: 50%;
@@ -273,15 +381,15 @@
             z-index: 3010;
         }
 
-        .lightbox-close:hover, .lightbox-btn:hover {
+        .lightbox-close:hover, .lightbox-nav-btn:hover {
             background: var(--primary);
             color: #090d16;
             box-shadow: 0 0 15px var(--primary-glow);
         }
 
-        .lightbox-close { top: 20px; right: 20px; }
-        .lightbox-prev { top: 50%; left: 20px; transform: translateY(-50%); }
-        .lightbox-next { top: 50%; right: 20px; transform: translateY(-50%); }
+        .lightbox-close { top: 15px; right: 15px; }
+        .lightbox-prev { top: 35%; left: 15px; transform: translateY(-50%); }
+        .lightbox-next { top: 35%; right: 15px; transform: translateY(-50%); }
     </style>
 </head>
 <body>
@@ -317,76 +425,156 @@
     <!-- شريط الأخبار المتحرك -->
     <div class="news-ticker">
         <div class="news-ticker-content">
-            📸 Галерея памяти и моменты с выступлений &nbsp;&nbsp;&nbsp; 📅 Сольные концерты: Ярославль (8 октября) | Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты уже в продаже!
+            ✨ Галерея ярких моментов творчества Татьяны Куртуковой &nbsp;&nbsp;&nbsp; 📅 Концерты: Ярославль (8 октября) | Иваново (9 октября) &nbsp;&nbsp;&nbsp; 🎟️ Билеты в продаже!
         </div>
     </div>
 
     <div class="container">
         <h1 class="page-title" data-aos="fade-down">Галерея памяти</h1>
-        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Нажмите на любую фотографию для просмотра в высоком разрешении</p>
+        <p class="page-subtitle" data-aos="fade-down" data-aos-delay="100">Прекрасные мгновения выступлений, туров и душевного творчества</p>
 
-        <div class="gallery-grid" id="galleryGrid">
-            <!-- الصورة 1 -->
-            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(0)">
-                <div class="gallery-img-container"><img src="img1.jpg" alt="Фото 1" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (1)</h3></div>
+        <div class="gallery-bento-grid" id="galleryGrid">
+            <!-- البطاقة 1 (Tall) -->
+            <div class="gallery-card tall" data-aos="fade-up" onclick="openLightbox(0)">
+                <div class="gallery-img-container">
+                    <img src="img1.jpg" alt="Татьяна Куртукова на сцене" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Выступление на сцене</h3>
+                    <p>Тур «Матушка-Земля»</p>
+                </div>
             </div>
-            <!-- الصورة 2 -->
-            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(1)">
-                <div class="gallery-img-container"><img src="img2.jpg" alt="Фото 2" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (2)</h3></div>
+
+            <!-- البطاقة 2 -->
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox(1)">
+                <div class="gallery-img-container">
+                    <img src="img2.jpg" alt="Концертные моменты" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Душевные моменты</h3>
+                    <p>Атмосфера концерта</p>
+                </div>
             </div>
-            <!-- الصورة 3 -->
-            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(2)">
-                <div class="gallery-img-container"><img src="img3.jpg" alt="Фото 3" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (3)</h3></div>
+
+            <!-- البطاقة 3 -->
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox(2)">
+                <div class="gallery-img-container">
+                    <img src="img3.jpg" alt="Афиша и творчество" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Творческий путь</h3>
+                    <p>Вдохновение и песня</p>
+                </div>
             </div>
-            <!-- الصورة 4 -->
-            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(3)">
-                <div class="gallery-img-container"><img src="img4.jpg" alt="Фото 4" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (4)</h3></div>
+
+            <!-- البطاقة 4 (Tall) -->
+            <div class="gallery-card tall" data-aos="fade-up" onclick="openLightbox(3)">
+                <div class="gallery-img-container">
+                    <img src="img4.jpg" alt="Фестивальные дни" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Яркие фестивали</h3>
+                    <p>Народная культура и мощь</p>
+                </div>
             </div>
-            <!-- الصورة 5 -->
-            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(4)">
-                <div class="gallery-img-container"><img src="img5.jpg" alt="Фото 5" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (5)</h3></div>
+
+            <!-- البطاقة 5 -->
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox(4)">
+                <div class="gallery-img-container">
+                    <img src="img5.jpg" alt="Концертный свет" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Сценический образ</h3>
+                    <p>Красота и традиции</p>
+                </div>
             </div>
-            <!-- الصورة 6 -->
-            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(5)">
-                <div class="gallery-img-container"><img src="img6.jpg" alt="Фото 6" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (6)</h3></div>
+
+            <!-- البطاقة 6 -->
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox(5)">
+                <div class="gallery-img-container">
+                    <img src="img6.jpg" alt="Встреча со зрителями" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Единство со зрителем</h3>
+                    <p>Теплота сердец</p>
+                </div>
             </div>
-            <!-- الصورة 7 -->
+
+            <!-- البطاقة 7 -->
             <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(6)">
-                <div class="gallery-img-container"><img src="img7.jpg" alt="Фото 7" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (7)</h3></div>
+                <div class="gallery-img-container">
+                    <img src="img7.jpg" alt="Музыкальные истоки" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Чистые истоки</h3>
+                    <p>Вековая память народа</p>
+                </div>
             </div>
-            <!-- الصورة 8 -->
-            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(7)">
-                <div class="gallery-img-container"><img src="img8.jpg" alt="Фото 8" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (8)</h3></div>
+
+            <!-- البطاقة 8 -->
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox(7)">
+                <div class="gallery-img-container">
+                    <img src="img8.jpg" alt="Гастрольные будни" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Гастрольные дни</h3>
+                    <p>Города России</p>
+                </div>
             </div>
-            <!-- الصورة 9 -->
-            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(8)">
-                <div class="gallery-img-container"><img src="img9.jpg" alt="Фото 9" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (9)</h3></div>
+
+            <!-- البطاقة 9 -->
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox(8)">
+                <div class="gallery-img-container">
+                    <img src="img9.jpg" alt="Энергия сцены" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Энергия сцены</h3>
+                    <p>Незабываемые эмоции</p>
+                </div>
             </div>
-            <!-- الصورة 10 -->
-            <div class="gallery-card" data-aos="fade-up" onclick="openLightbox(9)">
-                <div class="gallery-img-container"><img src="img10.jpg" alt="Фото 10" class="gallery-source-img"></div>
-                <div class="gallery-info"><h3>Татьяна Куртукова (10)</h3></div>
+
+            <!-- البطاقة 10 -->
+            <div class="gallery-card" data-aos="fade-up" data-aos-delay="300" onclick="openLightbox(9)">
+                <div class="gallery-img-container">
+                    <img src="img10.jpg" alt="Память поколений" class="gallery-source-img">
+                    <div class="img-overlay-hover"><i class="fas fa-search-plus"></i></div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Сила традиций</h3>
+                    <p>Любовь к родной земле</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- نافذة العرض المنبثقة (Lightbox) -->
+    <!-- نافذة العرض المنبثقة (Lightbox) مع زر التحميل -->
     <div class="lightbox-modal" id="lightboxModal">
         <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
-        <button class="lightbox-btn lightbox-prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
-        <div class="lightbox-content">
-            <img id="lightboxImg" src="" alt="Zoomed Image">
+        <button class="lightbox-nav-btn lightbox-prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-nav-btn lightbox-next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+        
+        <div class="lightbox-wrapper">
+            <div class="lightbox-img-container">
+                <img id="lightboxImg" src="" alt="Zoomed Image">
+            </div>
+            <div class="lightbox-footer">
+                <span class="lightbox-caption" id="lightboxCaption">Татьяна Куртукова — Концертные моменты</span>
+                <div class="lightbox-actions">
+                    <a id="downloadBtn" href="" download class="lightbox-action-btn">
+                        <i class="fas fa-download"></i> Скачать (تحميل)
+                    </a>
+                </div>
+            </div>
         </div>
-        <button class="lightbox-btn lightbox-next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -398,15 +586,28 @@
             document.getElementById('overlay').classList.toggle('show');
         }
 
+        const cards = document.querySelectorAll('.gallery-card');
         const images = document.querySelectorAll('.gallery-source-img');
         const modal = document.getElementById('lightboxModal');
         const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const downloadBtn = document.getElementById('downloadBtn');
         let currentIndex = 0;
 
         function openLightbox(index) {
             currentIndex = index;
-            lightboxImg.src = images[currentIndex].src;
+            updateLightboxContent();
             modal.classList.add('active');
+        }
+
+        function updateLightboxContent() {
+            const currentImg = images[currentIndex];
+            const cardTitle = cards[currentIndex].querySelector('h3').textContent;
+            const cardDesc = cards[currentIndex].querySelector('p').textContent;
+
+            lightboxImg.src = currentImg.src;
+            lightboxCaption.textContent = `«${cardTitle}» — ${cardDesc}`;
+            downloadBtn.href = currentImg.src;
         }
 
         function closeLightbox() {
@@ -420,7 +621,7 @@
             } else if (currentIndex >= images.length) {
                 currentIndex = 0;
             }
-            lightboxImg.src = images[currentIndex].src;
+            updateLightboxContent();
         }
 
         modal.addEventListener('click', (e) => {
